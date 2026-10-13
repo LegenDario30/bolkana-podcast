@@ -1,0 +1,59 @@
+/* A: +40 kg */
+#sA .card{top:520px;height:700px;padding:64px 70px}
+#kgRow{display:flex;align-items:flex-end;gap:26px;margin-top:96px}
+#kgNum{font-family:var(--display);font-weight:600;font-size:250px;line-height:.8;letter-spacing:-.04em}
+#kgUnit{font-family:var(--display);font-weight:600;font-size:90px;line-height:1;color:var(--red);padding-bottom:6px}
+#kgBar{margin-top:56px;height:26px;border-radius:13px;background:#D9D9D9;overflow:hidden}
+#kgFill{height:100%;width:100%;background:linear-gradient(90deg,var(--grass),var(--lava));transform-origin:left center}
+#kgHair{display:flex;align-items:center;gap:18px;margin-top:40px;font-family:var(--display);font-weight:600;font-size:46px;opacity:0}
+#kgHair b{display:block;padding:8px 20px;border-radius:14px;background:var(--ink);color:var(--y)}
+#scaleIco{position:absolute;right:70px;top:60px}
+
+/* B: ni para... */
+#sB .head{position:absolute;left:130px;top:470px;font-family:var(--body);font-weight:500;font-size:40px;letter-spacing:.02em;color:var(--y);opacity:0}
+.row{position:absolute;left:130px;width:820px;height:170px;border-radius:36px;background:var(--paper);color:var(--ink);display:flex;align-items:center;gap:34px;padding:0 48px;font-family:var(--display);font-weight:600;font-size:54px;white-space:nowrap;opacity:0}
+.row .x{display:flex;align-items:center;justify-content:center;width:84px;height:84px;border-radius:42px;background:var(--red);flex:none}
+.row.last{background:var(--red);color:var(--bone)}
+.row.last .x{background:var(--bone)}
+
+/* C: riesgo */
+#warn{position:absolute;left:290px;top:430px}
+#sC .big{position:absolute;left:0;right:0;top:990px;text-align:center;font-family:var(--display);font-weight:600;line-height:1}
+#sC .big .l1{display:block;font-size:120px;color:var(--bone)}
+#sC .big .l2{display:inline-block;font-size:120px;color:var(--ink);background:var(--y);padding:10px 34px 14px;border-radius:24px;margin-top:18px}
+
+/* D: maratón split */
+#sD{opacity:1}
+#panel{position:absolute;left:0;right:0;top:980px;height:940px;background:#141414;border-top:4px solid var(--y);overflow:hidden}
+#panel .eyebrow{position:absolute;left:130px;top:44px;color:var(--y)}
+#route{position:absolute;left:110px;top:40px}
+#km{position:absolute;left:130px;top:560px;font-family:var(--display);font-weight:600;font-size:150px;line-height:1;letter-spacing:-.03em}
+#km small{font-size:60px;color:var(--y);margin-left:12px}
+#noTrain{position:absolute;left:130px;top:740px;display:flex;align-items:center;gap:18px;height:88px;padding:0 30px 0 18px;border-radius:24px;background:var(--red);font-family:var(--display);font-weight:600;font-size:44px;opacity:0}
+
+/* lesión chip */
+#cLes{top:410px;background:var(--red);color:var(--bone)}
+#cLes .x{background:var(--bone)}
+
+/* E: ecuación */
+#sE .eq{position:absolute;left:0;right:0;text-align:center;font-family:var(--display);font-weight:600;line-height:1}
+#eq1{top:520px}
+#eq1 .a{display:block;font-size:130px;color:var(--bone)}
+#eq1 .b{display:block;font-family:var(--body);font-weight:500;font-size:52px;letter-spacing:.02em;color:#999999;margin-top:22px}
+#eqS{top:830px;font-size:170px;color:var(--y)}
+#eq2{top:1040px}
+#eq2 span{display:inline-block;font-size:130px;color:var(--ink);background:var(--y);padding:14px 40px 18px;border-radius:28px}
+
+/* battery */
+#bat{position:absolute;left:130px;top:410px;display:flex;flex-direction:column;align-items:flex-start;gap:18px;padding:26px 34px;border-radius:34px;background:rgba(20,20,20,.94);border:2px solid rgba(255,255,255,.14);opacity:0}
+#batBody{position:relative;width:250px;height:118px;border:9px solid var(--bone);border-radius:26px;padding:9px}
+#batBody:after{content:"";position:absolute;right:-30px;top:32px;width:16px;height:36px;border-radius:0 8px 8px 0;background:var(--bone)}
+#batFill{width:100%;height:100%;border-radius:12px;background:#5CD41C;transform-origin:left center}
+#batPct{font-family:var(--display);font-weight:600;font-size:84px;line-height:1;min-width:190px}
+#bat .r{display:flex;align-items:center;gap:56px}
+#batLab{font-family:var(--body);font-weight:500;font-size:26px;letter-spacing:.02em;color:var(--bone);opacity:.85}
+
+/* climax + end */
+#pet{position:absolute;left:0;right:0;top:1180px;text-align:center;opacity:0}
+#pet span{display:inline-block;font-family:var(--display);font-weight:600;font-size:118px;line-height:1;color:var(--bone);background:var(--red);padding:18px 44px 24px;border-radius:30px;}
+#sAcard,#cL1,#cL2,#warnMark,#eq1,#eqS,#eq2{opacity:0}

@@ -1,0 +1,22 @@
+# Vídeos y episodios: viven en Google Drive, no en GitHub
+episodios/
+
+# Herramientas específicas de Mac; se reinstalan en el servidor
+_sistema/tools/whisper-venv/
+_sistema/tools/cmakeenv/
+_sistema/tools/node_modules/
+_sistema/tools/whisper.cpp/
+_sistema/tools/bin/
+
+# Archivos pesados de marca (siguen solo en el Mac / Drive)
+_sistema/marca/brand-book/*.pdf
+*.psd
+
+# Binarios de vídeo y basura de macOS
+*.mp4
+*.mov
+*.wav
+.DS_Store
+
+# Excepción: el vídeo de referencia de estilo sí viaja con el sistema
+!_sistema/referencias/*.mp4

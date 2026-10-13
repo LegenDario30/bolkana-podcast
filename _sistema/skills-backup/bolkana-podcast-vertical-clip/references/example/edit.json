@@ -1,0 +1,563 @@
+{
+ "_about": "Worked example: 35.6 s podcast (1920x1080, man close 0–7.07, two-shot 7.07–16.9, woman close 16.9–end) → 34.2 s vertical clip (renders/v4.mp4).",
+ "source": "assets/prueba_horizontal.mp4",
+ "srcW": 1920,
+ "srcH": 1080,
+ "lang": "es",
+ "transcript": "clip/transcript.json",
+ "dtw": "align-dtw.json",
+ "segments": [
+  [
+   0.0,
+   6.62
+  ],
+  [
+   6.88,
+   8.12
+  ],
+  [
+   8.68,
+   10.18
+  ],
+  [
+   10.5,
+   11.62
+  ],
+  [
+   11.76,
+   15.56
+  ],
+  [
+   15.86,
+   16.78
+  ],
+  [
+   16.9,
+   17.98
+  ],
+  [
+   18.36,
+   26.02
+  ],
+  [
+   26.3,
+   35.63
+  ]
+ ],
+ "silences": [
+  [
+   6.52,
+   6.94
+  ],
+  [
+   8.03,
+   8.33
+  ],
+  [
+   10.1,
+   10.55
+  ],
+  [
+   11.55,
+   11.83
+  ],
+  [
+   15.48,
+   15.93
+  ],
+  [
+   16.71,
+   16.9
+  ],
+  [
+   17.92,
+   18.42
+  ],
+  [
+   25.95,
+   26.37
+  ]
+ ],
+ "textFixes": {
+  "osea": "o sea"
+ },
+ "keywords": [
+  "inversor",
+  "emprendido",
+  "emprendimiento",
+  "40",
+  "kilos",
+  "pelo",
+  "deporte",
+  "cuidarte",
+  "bien",
+  "empresa",
+  "nada",
+  "emprender",
+  "riesgo",
+  "maratón",
+  "entrenado",
+  "lesiones",
+  "tirar",
+  "consecuencias",
+  "petarás"
+ ],
+ "capSkip": [
+  "petarás"
+ ],
+ "keys": {
+  "inversor": "w7",
+  "emprendido": "w9",
+  "emprend2": "w13",
+  "cogieron": "w14",
+  "n40": "w15",
+  "kilos": "w16",
+  "peso": "w18",
+  "ysele": "w19",
+  "pelo": "w24",
+  "dejas1": "w25",
+  "deporte": "w27",
+  "dejas2": "w28",
+  "cuidarte": "w29",
+  "ylo": "w30",
+  "nobien": "w35",
+  "nitu": "w38",
+  "niemp": "w41",
+  "ninada": "w45",
+  "alfinal": "w48",
+  "emprender": "w50",
+  "yolo": "w51",
+  "deporte2": "w55",
+  "riesgo": "w57",
+  "situ": "w58",
+  "correr": "w65",
+  "maraton": "w67",
+  "sin": "w68",
+  "entrenado": "w70",
+  "nunca": "w73",
+  "vida": "w76",
+  "lomas": "w77",
+  "lesiones": "w83",
+  "esigual": "w84",
+  "emprender2": "w87",
+  "noteP": "w88",
+  "puedes": "w92",
+  "tirar1": "w93",
+  "tirar2": "w95",
+  "tirar3": "w97",
+  "consec": "w105",
+  "osea": "w107",
+  "momento": "w110",
+  "petaras": "w111"
+ },
+ "srcKeys": {
+  "camcut1": 7.07,
+  "camcut2": 16.9
+ },
+ "tracks": {
+  "MC": [
+   [
+    0,
+    1135,
+    340
+   ],
+   [
+    2,
+    1105,
+    340
+   ],
+   [
+    4,
+    1090,
+    340
+   ],
+   [
+    6,
+    1060,
+    340
+   ],
+   [
+    7.0,
+    1060,
+    340
+   ]
+  ],
+  "MW": [
+   [
+    0,
+    1430,
+    330
+   ]
+  ],
+  "WW": [
+   [
+    0,
+    410,
+    370
+   ]
+  ],
+  "WC": [
+   [
+    16.9,
+    690,
+    360
+   ],
+   [
+    19,
+    705,
+    360
+   ],
+   [
+    21,
+    720,
+    360
+   ],
+   [
+    23,
+    750,
+    372
+   ],
+   [
+    25,
+    690,
+    338
+   ],
+   [
+    27,
+    690,
+    360
+   ],
+   [
+    29,
+    720,
+    360
+   ],
+   [
+    31,
+    720,
+    372
+   ],
+   [
+    33,
+    660,
+    372
+   ],
+   [
+    35.6,
+    660,
+    372
+   ]
+  ]
+ },
+ "title": {
+  "eyebrow": "The Bolkana Podcast",
+  "a": "El coste oculto",
+  "b": "de emprender",
+  "out": "emprend2"
+ },
+ "tail": 0,
+ "camera": {
+  "_row": "[at, track, scale, driftScale, faceX 0-1, faceY 0-1|'full'|'split', easeInDur?, 'out'|'io'?]",
+  "top": [
+   [
+    0,
+    "MC",
+    1.85,
+    1.95,
+    0.5,
+    "full"
+   ],
+   [
+    "inversor",
+    "MC",
+    2.25,
+    2.35,
+    0.5,
+    "full",
+    0.3
+   ],
+   [
+    "emprend2",
+    "MC",
+    1.9,
+    2.0,
+    0.5,
+    "full",
+    0.35,
+    "io"
+   ],
+   [
+    "camcut1",
+    "MW",
+    2.6,
+    2.7,
+    0.56,
+    "split"
+   ],
+   [
+    "seg:3",
+    "MW",
+    2.9,
+    2.95,
+    0.56,
+    "split"
+   ],
+   [
+    "seg:4",
+    "MW",
+    2.7,
+    2.8,
+    0.5,
+    "full",
+    0.45,
+    "io"
+   ],
+   [
+    "seg:5",
+    "MW",
+    3.0,
+    3.05,
+    0.5,
+    "full"
+   ],
+   [
+    "nobien",
+    "MW",
+    3.35,
+    3.4,
+    0.5,
+    "full",
+    0.25
+   ],
+   [
+    "nitu-0.12",
+    "MW",
+    2.5,
+    2.6,
+    0.68,
+    0.52,
+    0.45,
+    "io"
+   ],
+   [
+    "seg:6",
+    "MW",
+    2.7,
+    2.75,
+    0.68,
+    0.52
+   ],
+   [
+    "seg:7",
+    "WC",
+    1.85,
+    1.95,
+    0.5,
+    "full"
+   ],
+   [
+    "seg:8",
+    "WC",
+    2.15,
+    2.25,
+    0.5,
+    "full"
+   ],
+   [
+    "situ",
+    "WC",
+    1.9,
+    2.0,
+    0.5,
+    "full"
+   ],
+   [
+    "maraton-0.12",
+    "WC",
+    1.9,
+    1.95,
+    0.5,
+    0.25,
+    0.5,
+    "io"
+   ],
+   [
+    "seg:9",
+    "WC",
+    2.3,
+    2.45,
+    0.5,
+    "full",
+    0.4,
+    "io"
+   ],
+   [
+    "noteP",
+    "WC",
+    1.85,
+    1.95,
+    0.5,
+    "full"
+   ],
+   [
+    "tirar1",
+    "WC",
+    2.05,
+    2.08,
+    0.5,
+    "full",
+    0.18
+   ],
+   [
+    "tirar2",
+    "WC",
+    2.25,
+    2.28,
+    0.5,
+    "full",
+    0.18
+   ],
+   [
+    "tirar3",
+    "WC",
+    2.45,
+    2.5,
+    0.5,
+    "full",
+    0.18
+   ],
+   [
+    "consec",
+    "WC",
+    2.5,
+    2.75,
+    0.5,
+    "full"
+   ],
+   [
+    "petaras",
+    "WC",
+    2.8,
+    2.9,
+    0.5,
+    "full",
+    0.2
+   ]
+  ],
+  "bottom": [
+   [
+    0,
+    "WW",
+    2.6,
+    2.7,
+    0.42,
+    "split"
+   ],
+   [
+    "seg:3",
+    "WW",
+    2.85,
+    2.9,
+    0.42,
+    "split"
+   ],
+   [
+    "nitu-0.12",
+    "WW",
+    2.7,
+    2.8,
+    0.42,
+    "split"
+   ],
+   [
+    "seg:6",
+    "WW",
+    2.95,
+    3.0,
+    0.42,
+    "split"
+   ]
+  ]
+ },
+ "split": [
+  [
+   0,
+   1920,
+   0
+  ],
+  [
+   "camcut1",
+   960,
+   0
+  ],
+  [
+   "seg:4",
+   1920,
+   0.45
+  ],
+  [
+   "nitu-0.12",
+   960,
+   0.45
+  ],
+  [
+   "ninada-0.12",
+   1920,
+   0.35
+  ]
+ ],
+ "seam": [
+  [
+   "camcut1",
+   "seg:4"
+  ],
+  [
+   "nitu+0.28",
+   "ninada-0.12"
+  ]
+ ],
+ "music": {
+  "file": ".media/audio/bgm/bgm_v3_original.mp3",
+  "volume": 0.55,
+  "carve": 0.3
+ },
+ "sfx": [
+  {
+   "at": "cogieron-0.3",
+   "file": ".media/audio/sfx/sfx_001.mp3",
+   "vol": 0.22
+  },
+  {
+   "at": "nitu-0.28",
+   "file": ".media/audio/sfx/sfx_001.mp3",
+   "vol": 0.22
+  },
+  {
+   "at": "deporte2-0.28",
+   "file": ".media/audio/sfx/sfx_001.mp3",
+   "vol": 0.22
+  },
+  {
+   "at": "maraton-0.3",
+   "file": ".media/audio/sfx/sfx_001.mp3",
+   "vol": 0.22
+  },
+  {
+   "at": "esigual-0.26",
+   "file": ".media/audio/sfx/sfx_001.mp3",
+   "vol": 0.22
+  },
+  {
+   "at": "petaras-0.02",
+   "file": ".media/audio/sfx/sfx_002.mp3",
+   "vol": 0.5,
+   "dur": "rest"
+  }
+ ],
+ "brand": {
+  "footage": "color",
+  "header": true,
+  "youtube": "wearebolkana",
+  "eyebrow": "The Bolkana Podcast"
+ }
+}

@@ -1,0 +1,58 @@
+  <!-- A · +40 kg -->
+  <div class="scene" id="sA"><div class="card light" id="sAcard">
+    <div class="eyebrow">Durante el emprendimiento</div>
+    <svg id="scaleIco" width="120" height="120" viewBox="0 0 120 120"><rect x="8" y="8" width="104" height="104" rx="28" fill="none" stroke="#232323" stroke-width="9"/><path d="M34 48 A28 28 0 0 1 86 48" fill="none" stroke="#232323" stroke-width="9" stroke-linecap="round"/><line id="needle" x1="60" y1="58" x2="60" y2="30" stroke="#D31C1F" stroke-width="9" stroke-linecap="round"/></svg>
+    <div id="kgRow"><div id="kgNum">+0</div><div id="kgUnit">kg</div></div>
+    <div id="kgBar"><div id="kgFill"></div></div>
+  </div></div>
+
+  <!-- chips sobre la facecam -->
+  <div class="chip" id="cDep" style="top:410px"><div class="x"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M5 5L25 25M25 5L5 25" stroke="#F3F3F3" stroke-width="6" stroke-linecap="round"/></svg></div><s id="sDep">Deporte</s></div>
+  <div class="chip" id="cCui" style="top:530px"><div class="x"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M5 5L25 25M25 5L5 25" stroke="#F3F3F3" stroke-width="6" stroke-linecap="round"/></svg></div><s id="sCui">Cuidarte</s></div>
+
+  <!-- B · ni para... -->
+  <div class="scene" id="sB">
+    <div class="row" id="r1" style="top:560px"><div class="x"><svg width="36" height="36" viewBox="0 0 30 30"><path d="M5 5L25 25M25 5L5 25" stroke="#F3F3F3" stroke-width="6" stroke-linecap="round"/></svg></div><span>Ni para ti</span></div>
+    <div class="row" id="r2" style="top:760px"><div class="x"><svg width="36" height="36" viewBox="0 0 30 30"><path d="M5 5L25 25M25 5L5 25" stroke="#F3F3F3" stroke-width="6" stroke-linecap="round"/></svg></div><span>Ni para la empresa</span></div>
+    <div class="row last" id="r3" style="top:960px"><div class="x"><svg width="36" height="36" viewBox="0 0 30 30"><path d="M5 5L25 25M25 5L5 25" stroke="#D31C1F" stroke-width="6" stroke-linecap="round"/></svg></div><span>Ni para nada</span></div>
+  </div>
+
+  <!-- C · deporte de riesgo -->
+  <div class="scene" id="sC">
+    <svg id="warn" width="500" height="450" viewBox="0 0 500 450">
+      <path id="warnTri" d="M250 30 L470 410 H30 Z" fill="none" stroke="#5CD41C" stroke-width="34" stroke-linejoin="round" stroke-dasharray="1300" stroke-dashoffset="1300"/>
+      <g id="warnMark"><rect x="232" y="150" width="36" height="140" rx="18" fill="#5CD41C"/><circle cx="250" cy="340" r="22" fill="#5CD41C"/></g>
+    </svg>
+    <div class="big"><span class="l1" id="cL1">Deporte</span><span class="l2" id="cL2">de riesgo</span></div>
+  </div>
+
+  <!-- D · maratón (split inferior) -->
+  <div class="scene" id="sD"><div id="panel" data-layout-allow-overflow>
+    <div class="eyebrow">Maratón</div>
+    <svg id="route" width="960" height="420" viewBox="0 0 990 433">
+      <path d="M40 330 C 170 330, 190 150, 320 150 S 470 300, 600 280 S 760 90, 920 110" fill="none" stroke="#2A2E36" stroke-width="18" stroke-linecap="round"/>
+      <path id="routeP" d="M40 330 C 170 330, 190 150, 320 150 S 470 300, 600 280 S 760 90, 920 110" fill="none" stroke="#5CD41C" stroke-width="18" stroke-linecap="round"/>
+      <circle cx="40" cy="330" r="16" fill="#F3F3F3"/>
+      <g id="flag"><line x1="920" y1="110" x2="920" y2="40" stroke="#F3F3F3" stroke-width="6" stroke-linecap="round"/><path d="M920 40 H968 L955 56 L968 72 H920 Z" fill="#D31C1F"/></g>
+      <circle id="runner" cx="40" cy="330" r="26" fill="#F3F3F3" stroke="#5CD41C" stroke-width="10"/>
+    </svg>
+    <div id="km"><span id="kmN">0,0</span><small>km</small></div>
+    <div id="noTrain"><div class="x" style="width:54px;height:54px;border-radius:27px;background:#F3F3F3;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 30 30"><path d="M5 5L25 25M25 5L5 25" stroke="#D31C1F" stroke-width="6" stroke-linecap="round"/></svg></div><span>Sin haber entrenado</span></div>
+  </div></div>
+
+  <div class="chip" id="cLes"><div class="x"><svg width="34" height="34" viewBox="0 0 34 34"><path d="M17 4 L31 29 H3 Z" fill="none" stroke="#D31C1F" stroke-width="5" stroke-linejoin="round"/><rect x="15" y="12" width="4" height="9" rx="2" fill="#D31C1F"/><circle cx="17" cy="25" r="2.4" fill="#D31C1F"/></svg></div><span>Lesión</span></div>
+
+  <!-- E · ecuación -->
+  <div class="scene" id="sE">
+    <div class="eq" id="eq1"><span class="a">Maratón</span><span class="b">sin entrenar</span></div>
+    <div class="eq" id="eqS">=</div>
+    <div class="eq" id="eq2"><span>Emprender</span></div>
+  </div>
+
+  <!-- batería -->
+  <div id="bat"><div id="batLab">Tu energía</div><div class="r"><div id="batBody"><div id="batFill"></div></div><div id="batPct">100%</div></div></div>
+
+  <div class="chip" id="cTi" style="top:410px"><div class="x"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M5 5L25 25M25 5L5 25" stroke="#F3F3F3" stroke-width="6" stroke-linecap="round"/></svg></div><span>Ni para ti</span></div>
+  <div class="chip" id="cEm" style="top:530px"><div class="x"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M5 5L25 25M25 5L5 25" stroke="#F3F3F3" stroke-width="6" stroke-linecap="round"/></svg></div><span>Ni para la empresa</span></div>
+
+  <div id="pet" data-layout-allow-overlap><span>¡Petarás!</span></div>

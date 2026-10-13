@@ -1,0 +1,13 @@
+{
+  "name": "bolkana-clip",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "PATH=\"$PWD/../../../../_sistema/tools/bin:$PATH\" HYPERFRAMES_WHISPER_PATH=\"$PWD/../../../../_sistema/tools/whisper.cpp/build/bin/whisper-cli\" npx --yes hyperframes@0.8.96 preview",
+    "check": "PATH=\"$PWD/../../../../_sistema/tools/bin:$PATH\" HYPERFRAMES_WHISPER_PATH=\"$PWD/../../../../_sistema/tools/whisper.cpp/build/bin/whisper-cli\" npx --yes hyperframes@0.8.96 check",
+    "render": "PATH=\"$PWD/../../../../_sistema/tools/bin:$PATH\" HYPERFRAMES_WHISPER_PATH=\"$PWD/../../../../_sistema/tools/whisper.cpp/build/bin/whisper-cli\" npx --yes hyperframes@0.8.96 render",
+    "publish": "PATH=\"$PWD/../../../../_sistema/tools/bin:$PATH\" HYPERFRAMES_WHISPER_PATH=\"$PWD/../../../../_sistema/tools/whisper.cpp/build/bin/whisper-cli\" npx --yes hyperframes@0.8.96 publish",
+    "doctor": "PATH=\"$PWD/../../../../_sistema/tools/bin:$PATH\" HYPERFRAMES_WHISPER_PATH=\"$PWD/../../../../_sistema/tools/whisper.cpp/build/bin/whisper-cli\" npx --yes hyperframes@0.8.96 doctor",
+    "transcribe": "PATH=\"$PWD/../../../../_sistema/tools/bin:$PATH\" HYPERFRAMES_WHISPER_PATH=\"$PWD/../../../../_sistema/tools/whisper.cpp/build/bin/whisper-cli\" npx --yes hyperframes@0.8.96 transcribe --model small --language es"
+  }
+}
