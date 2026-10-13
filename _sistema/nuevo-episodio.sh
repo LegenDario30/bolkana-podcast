@@ -12,8 +12,8 @@ if [ -e "$DIR" ]; then
 else
   cp -R _sistema/plantilla-episodio "$DIR"
 fi
-sed -i '' -e "s/__EP__/$EP/g" -e "s/__INVITADO__/$INV/g" "$DIR/EPISODIO.md"
-sed -i '' -e "s/__EP__/$EP/g" -e "s/__DATE__/$(date -u +%Y-%m-%dT%H:%M:%SZ)/" "$DIR/03_clips/_base/meta.json"
+sed -i.bak -e "s/__EP__/$EP/g" -e "s/__INVITADO__/$INV/g" "$DIR/EPISODIO.md" && rm -f "$DIR/EPISODIO.md.bak"
+sed -i.bak -e "s/__EP__/$EP/g" -e "s/__DATE__/$(date -u +%Y-%m-%dT%H:%M:%SZ)/" "$DIR/03_clips/_base/meta.json" && rm -f "$DIR/03_clips/_base/meta.json.bak"
 if [ -n "$MASTER" ]; then mv "$MASTER" "$DIR/01_fuente/#$EP | $INV.mp4"; fi
 echo "Creado: $DIR"
 echo "Siguiente: pon el máster en 01_fuente/ (si no lo has pasado) y dile a Claude \"vamos con el $EP\"."
