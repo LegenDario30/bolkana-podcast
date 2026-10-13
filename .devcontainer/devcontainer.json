@@ -2,10 +2,15 @@
   "name": "Bolkana Podcast",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
   "features": {
-    "ghcr.io/devcontainers/features/node:1": { "version": "20" },
-    "ghcr.io/devcontainers/features/python:1": { "version": "3.11" }
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
+    }
   },
-  "hostRequirements": { "cpus": 8, "memory": "16gb", "storage": "64gb" },
   "postCreateCommand": "bash .devcontainer/setup.sh",
-  "remoteEnv": { "BOLKANA_ROOT": "/workspaces/bolkana-podcast" }
+  "remoteEnv": {
+    "BOLKANA_ROOT": "/workspaces/bolkana-podcast"
+  }
 }
