@@ -1,8 +1,16 @@
 import json, re, sys, os, time, difflib, unicodedata, statistics as st
 
-ORIG = "podcast_words.json"          # transcripción original (la del Mac)
-NEW = "fw_words.json"                # salida de faster-whisper
-WAV = "podcast_16k.wav"
+import argparse
+ap = argparse.ArgumentParser()
+ap.add_argument("--model", default="small")            # small | medium ...
+ap.add_argument("--prompt", default=None)              # vocabulario del dominio (initial_prompt)
+ap.add_argument("--out", default=None)                 # JSON de salida (por defecto fw_words_<model>[_prompt].json)
+ap.add_argument("--orig", default="podcast_words.json")
+ap.add_argument("--wav", default="podcast_16k.wav")
+A = ap.parse_args()
+ORIG = A.orig
+WAV = A.wav
+NEW = A.out or ("fw_words_%s%s.json" % (A.model, "_prompt" if A.prompt else ""))
 
 def norm(t):
     t = unicodedata.normalize("NFKD", t.lower())
@@ -12,16 +20,17 @@ def norm(t):
 if not os.path.exists(NEW):
     from faster_whisper import WhisperModel
     t0 = time.time()
-    m = WhisperModel("small", device="cpu", compute_type="int8", cpu_threads=4)
+    m = WhisperModel(A.model, device="cpu", compute_type="int8", cpu_threads=4)
     segs, info = m.transcribe(WAV, language="es", word_timestamps=True,
-                              beam_size=1, condition_on_previous_text=False)
+                              beam_size=1, condition_on_previous_text=False,
+                              initial_prompt=A.prompt)
     out = []
     for s in segs:
         for w in (s.words or []):
             out.append({"text": w.word.strip(), "start": round(w.start, 3),
                         "end": round(w.end, 3), "prob": round(w.probability, 3)})
     json.dump(out, open(NEW, "w"), ensure_ascii=False, indent=1)
-    print("faster-whisper: %d palabras en %.0f s" % (len(out), time.time() - t0))
+    print("faster-whisper (%s%s): %d palabras en %.0f s" % (A.model, " + prompt" if A.prompt else "", len(out), time.time() - t0))
 
 a = json.load(open(ORIG)); b = json.load(open(NEW))
 # descarta tokens vacíos tras normalizar (solo puntuación)
@@ -61,6 +70,11 @@ for nm, x in (("inicio", ds), ("fin", de)):
     if x:
         R.append("%-6s media %+0.3f s | mediana %+0.3f s | |p95| %0.3f s | máx %0.3f s | ±50 ms: %.0f %% | ±100 ms: %.0f %% | ±200 ms: %.0f %%"
                  % (nm, st.mean(x), st.median(x), p95(x), max(abs(v) for v in x), pct(x, .05), pct(x, .10), pct(x, .20)))
+TERMS = ["bolkana", "why", "escepticos", "ghosting", "emprendedora", "emprendedor", "impostora", "desaprender"]
+R.append("")
+R.append("== TÉRMINOS CLAVE (apariciones: original -> nueva) ==")
+for t in TERMS:
+    R.append("%-14s %3d -> %3d" % (t, sum(1 for x in na if x == t), sum(1 for x in nb if x == t)))
 if ds and st.median([abs(v) for v in ds]) > 5:
     R.append("!! AVISO: desfase mediano > 5 s; el alineado parece desplazado, no fiarse de los tiempos.")
 R.append("")
