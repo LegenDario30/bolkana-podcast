@@ -12,5 +12,8 @@
   "postCreateCommand": "bash .devcontainer/setup.sh",
   "remoteEnv": {
     "BOLKANA_ROOT": "/workspaces/bolkana-podcast"
-  }
+  },
+  "runArgs": [
+    "--shm-size=1g"
+  ]
 }

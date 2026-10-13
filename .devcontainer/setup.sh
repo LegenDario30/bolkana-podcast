@@ -8,7 +8,11 @@ mkdir -p "$TOOLS/bin"
 
 echo "== 1/7 Paquetes del sistema =="
 sudo apt-get update -y
-sudo apt-get install -y ffmpeg cmake build-essential git rclone jq
+sudo apt-get install -y ffmpeg cmake build-essential git rclone jq \
+  libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 \
+  libatspi2.0-0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 \
+  libpango-1.0-0 libcairo2 libasound2
+ffmpeg -version >/dev/null 2>&1 || echo "AVISO: ffmpeg no arranca; revisar dependencias"
 
 echo "== 2/7 Rutas que esperan las skills (~/Bolkana/Bolkana Podcast) =="
 mkdir -p "$HOME/Bolkana"
@@ -28,6 +32,7 @@ if [ ! -d "$TOOLS/whisper.cpp" ]; then
   git clone --depth 1 https://github.com/ggml-org/whisper.cpp "$TOOLS/whisper.cpp"
 fi
 ( cd "$TOOLS/whisper.cpp" && cmake -B build && cmake --build build -j"$(nproc)" --config Release )
+sudo ln -sf "$TOOLS/whisper.cpp/build/bin/whisper-cli" /usr/local/bin/whisper-cli
 mkdir -p "$HOME/.cache/hyperframes/whisper/models"
 ( cd "$TOOLS/whisper.cpp" && bash models/download-ggml-model.sh small )
 cp -n "$TOOLS/whisper.cpp/models/ggml-small.bin" "$HOME/.cache/hyperframes/whisper/models/ggml-small.bin"
