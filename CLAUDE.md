@@ -50,6 +50,35 @@ Lo dirige la skill **bolkana-episodio** ("vamos con el 17", "sigue con el 17", "
    no crea posts en Buffer.
 7. `EPISODIO.md`, `estado.json` y `_sistema/musica/CANCIONES.md` siempre al día.
 
+## Trabajo en la nube (Codespace) — desde el #17
+
+El Mac (MacBook Pro 2017, 8 GB, ~5 GB libres) no aguanta el trabajo pesado. Reparto:
+
+- **Codespace** (`musical-broccoli-vg76w7vqw79f7gp`, repo LegenDario30/bolkana-podcast, 4 núcleos / 16 GB / ~21 GB libres,
+  ruta `/workspaces/bolkana-podcast`, enlace `~/Bolkana/Bolkana Podcast`): descargar másters de Drive, transcribir, cortar,
+  renderizar, sacar frames. Claude lo controla desde el Mac con `gh codespace ssh -c <nombre> -- '<comando>'` (gh está en
+  `~/.local/bin`). Para pasar archivos: `tar … | gh codespace ssh … 'tar -x'` o `gh codespace ssh … 'cat archivo' > local`.
+- **Mac**: guiones, revisión, miniaturas, pies de foto, EPISODIO.md / estado.json. Al Mac solo vuelven resultados ligeros
+  (transcripción, frames, renders finales para revisar). **Nunca se descarga un máster al Mac.**
+- **Másters**: se quedan en Google Drive. En el Codespace se bajan de uno en uno con rclone, se saca una versión de trabajo
+  y se borra el original (no caben varios másters HD a la vez).
+- **Material del #17 en adelante:** vídeo editado (versión final para publicar, sin cortes; ~4,4 GB) + una cámara por persona
+  y un plano general (~26 GB cada una) + WAV de los micros. Base de los clips y audio = el editado (se baja entero). Las
+  cámaras **no se descargan**: se leen desde Drive (rclone) y se extrae solo el tramo que haga falta como plano recurso
+  (reacción real del mismo instante). Sincronía: un único desfase por cámara respecto al editado, medido por audio y anotado
+  en EPISODIO.md. Plan B si leer de Drive va mal: unas pocas reacciones fijas por persona cortadas en el Codespace. El WAV
+  queda en Drive como respaldo.
+- **Cuota** (cuenta Free, límite de gasto 0 USD; 120 h-núcleo/mes y 15 GB/mes, se reinicia el día 1): parar el Codespace al
+  acabar (`gh codespace stop -c <nombre>`) e informar del consumo real al usuario
+  (`gh api "/users/LegenDario30/settings/billing/usage?year=AAAA&month=M"`).
+- **Verificado (13-10-2026):** el render de HyperFrames en el Codespace sale igual que en el Mac (clip 05 del #16: SSIM 0,994,
+  mismo volumen) y tarda ~6 s por segundo de vídeo. /dev/shm = 1 GB, ffmpeg 4.4.2.
+- **Pendiente:** conectar rclone con Google Drive (la autorización la hace el usuario en su navegador); cambiar
+  `transcribe.py` por faster-whisper (small int8 ≈ 7,6× más rápido, 96 % de palabras iguales) y añadirlo a `setup.sh`;
+  adaptar la skill bolkana-episodio para que los pasos pesados corran en el Codespace.
+- Permisos: pedir permiso al usuario antes de descargar, subir a servicios externos o hacer commit/push. Claude nunca
+  introduce credenciales; las autorizaciones (gh, rclone) las hace el usuario.
+
 ## Reglas fijas (aprendidas en el #16)
 
 - **Marca Bolkana siempre** (ver skill y `_sistema/marca/frame.md`): Graphite/Bone/Lava/Grass, Outfit 600 + Karla, cabecera v2
