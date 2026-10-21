@@ -83,11 +83,24 @@ if "--words" in args:
 
 # ---------- captions: 1–2 words, ≤13 chars, break on punctuation / pause / keyword ----------
 KEY = {k.lower() for k in E.get("keywords", [])}
+# client rule (#17): captions start in lower case, also at the start of a sentence, unless the word is a proper noun.
+# Proper = edit.json "proper" + capitalised words in textFixes values + words the transcript capitalises mid-sentence; acronyms stay.
+PROPER = set(E.get("proper", []))
+for v in fix.values(): PROPER.update(x for x in re.findall(r"[\wÁÉÍÓÚÑáéíóúñü]+", v) if x[:1].isupper())
+for prev, w in zip([{"text": "."}] + W, W):
+    t = re.sub(r"[^\wÁÉÍÓÚÑáéíóúñü]", "", w["text"])
+    if t[:1].isupper() and not re.search(r"[.!?¿¡…]\s*$", prev["text"].strip()): PROPER.add(t)
+LOWER = {re.sub(r"[^\wáéíóúñü]", "", w["text"]) for w in W if w["text"].strip()[:1].islower()}
+PROPER -= {p for p in PROPER if p[:1].lower() + p[1:] in LOWER} - set(E.get("proper", []))   # whisper capitalises segment starts
+def lc(p):
+    core = re.sub(r"[^\wÁÉÍÓÚÑáéíóúñü]", "", p)
+    if not E.get("lowercase", True) or not core[:1].isupper() or core in PROPER or any(c.isupper() for c in core[1:]): return p   # acronyms and CamelCase (VC, ChatGPT) stay
+    i = p.index(core[0]); return p[:i] + p[i].lower() + p[i + 1:]
 caps = []; cur = None
 for s, txt, _ in words:
     if not any(a <= s <= b for a, b in SEG) and not any(a <= s + 0.15 <= b for a, b in SEG):
         continue                                            # word lives in a removed range (filler, retake)
-    clean = re.sub(r"[.,;:!?¿¡]", "", txt).strip()
+    clean = " ".join(lc(p) for p in re.sub(r"[.,;:!?¿¡]", "", txt).strip().split(" "))
     parts = clean.split(" "); isk = any(p.lower() in KEY for p in parts)
     brk = (cur is None or len(cur["w"]) >= 2 or len(" ".join(x[1] for x in cur["w"]) + " " + clean) > E.get("capChars", 13)
            or cur["p"] or s - cur["last"] > 0.35 or isk or any(x[2] for x in cur["w"]))

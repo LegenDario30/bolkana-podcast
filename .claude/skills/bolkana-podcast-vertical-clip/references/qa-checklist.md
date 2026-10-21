@@ -54,7 +54,7 @@ Known lint warnings you can accept: `composition_file_too_large`, `audio_carve_u
     moving the old file to `_prev/`, and report each requested point by its number.
 25. **Frame 0**: snapshot at 0 s and 0.05 s. Nothing that animates in later (title lines, eyebrow, glow, chips) may be
     visible yet. A `fromTo(...,{...IR})` doesn't apply its from-state before it starts, so add a `tl.set` at 0 or CSS `opacity:0`.
-26. **Music subtle, in the background**: a song from `_sistema/musica/` (never synthesized), and `bash $SK/mixcheck.sh <project>`
+26. **Music subtle, in the background**: a song from `_sistema/musica/` (never synthesized), and `bash "$SK"/mixcheck.sh <project>`
     reports the bed 19–21 dB under the voice (−16 LUFS excerpt, volume ≈ 0.18–0.28, carve 0.3). Fade in 0.25 s, fade out 1.5 s
     ending on the last word.
 

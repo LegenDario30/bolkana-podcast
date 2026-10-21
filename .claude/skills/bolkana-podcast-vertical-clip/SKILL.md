@@ -72,19 +72,43 @@ append it or any outro to a vertical clip).
 - Respect media constraints the user states (e.g. "don't use music_bed.mp3"). If the transcript
   file the user mentioned is missing, ask — don't invent one.
 
-`SK=~/.claude/skills/bolkana-podcast-vertical-clip/scripts`
+`SK="$HOME/Bolkana/Bolkana Podcast/.claude/skills/bolkana-podcast-vertical-clip/scripts"` (always quote it: the path has spaces)
+
+## Client corrections from #17 — get these right on the first render
+
+Three review rounds of #17 (Kompanion, Oct 2026) asked for the same kinds of fixes. Check every one before reporting a clip:
+- **Captions — text.** Start in lower case, also at the start of a sentence, unless it's a proper noun (`build.py` does it;
+  add names to `edit.json` → `"proper": [...]` when needed). Listen to every doubtful word: whisper mishears names and
+  fast speech («técnicamente» heard as «tenían currículums», «que ha crecido» as «que agresiva», «Cobee» as «COVID»,
+  «lo quiere» as «lo quieres», «a los otros fondos» without the «a»). Use the guest's real company and product names. No
+  leading dashes («—De tinto»). Swear words censored with an asterisk («H*stia»). A ghost word stuck behind the captions
+  means a sub-0.09 s group: check the last frame.
+- **Captions — speech.** Cut stutters, self-corrections and repeated words («nada… pero nada», «diez trabajadores, diez
+  proveedores», «los inversores… los fundadores»): keep only the corrected phrase, with a clean word-edge cut.
+- **Ending.** The last word must be whole and breathe a little: leave the tail of the word plus ~0.2 s, without letting the
+  next speaker's word in. A clipped final word was sent back twice.
+- **Framing.** Close-ups in the edited master sit high: lowest scale with the image pinned to the top, the face never under
+  the header. In split screens each face centred in its half («only the ceiling shows» was rejected). Re-measure face
+  tracks near the end of each shot: a wrong track point slides the camera off the guest. No single stray frame from
+  another shot at a segment edge (the «red wall» frame) — step through each edge frame by frame.
+- **Split screens** last at least ~3–4 s so both people read; a 1.5 s split was too short.
+- **Graphics.** Chips sit on the chest, well below the face — chips near the chin were rejected. Remove any chip the speech
+  doesn't need. Chips are white; Lava only for caption keywords, not for one chip in a list.
+- **Music** fits the clip's mood: the_mountain was rejected for a data/ageing-sector clip; «épica» means the most dramatic
+  build in the library (Midnight Velvet's rise). Re-cut the bed whenever the length changes.
+- **Delivery.** Compare file size Mac ↔ Codespace after downloading (a truncated copy looked like a frozen frame).
 
 ## 1 · Analyse the footage
 
 ```bash
-bash $SK/analyze.sh assets/<video>.mp4 clip/analysis
+bash "$SK"/analyze.sh assets/<video>.mp4 clip/analysis
 ```
 Gives camera cuts (source seconds), silences at −30/−26 dB, a 20 ms energy map
 (`energy.txt`), a 1 fps contact sheet and a 16 kHz wav. Look at the contact sheet: which shots
 exist (close A, two-shot, close B), where each person sits, where burned-in logos are (keep crops
 off them).
 
-If a reference video is given, run `bash $SK/ref.sh assets/<ref>.mp4 clip/analysis/ref` and read
+If a reference video is given, run `bash "$SK"/ref.sh assets/<ref>.mp4 clip/analysis/ref` and read
 the tiles + transition strips. Write down, concretely: cut rhythm, caption style/position, how
 B-roll enters (blur dissolve? split reveal?), zoom behaviour, overlays. Read
 `references/style-guide.md` for what to extract and the default look this template implements.
@@ -96,7 +120,7 @@ When the user sends a list of clips as fragments of the full episode ("Clip N: g
 1. Transcribe the whole episode once (word-level whisper) and find each quote's exact first/last word there.
    The "…" in a quote usually means "skip what's in between" — follow it; the "por qué funciona" note tells you the angle.
 2. Write `fragments.json` (generous ranges at word edges) and cut every clip from the HD master in one go:
-   `python3 $SK/cut_fragments.py --master "assets/<ep>.mp4" --words <ep_words.json> --fragments fragments.json --root <batch>`
+   `python3 "$SK"/cut_fragments.py --master "assets/<ep>.mp4" --words <ep_words.json> --fragments fragments.json --root <batch>`
    (`--offset` if the master is a different encode than the transcribed audio). One project per clip under `<batch>/clip_NN/`.
 3. Per clip: `analyze.sh` on `media/clip_NN_joined.mp4`, `align_dtw.sh`, a skeleton `edit.json` (source, srcW/H, transcript,
    dtw, silences from silencedetect −30 dB d=0.12), then the fine cut with `cutplan.py` (step 2).
@@ -107,7 +131,7 @@ The user's transcript text is authoritative; its timestamps are often off by 0.2
 them:
 
 ```bash
-bash $SK/align_dtw.sh clip/analysis/audio16k.wav es clip/align-dtw.json
+bash "$SK"/align_dtw.sh clip/analysis/audio16k.wav es clip/align-dtw.json
 ```
 `build.py` matches DTW tokens to transcript words and snaps onsets out of measured silences.
 
@@ -116,11 +140,11 @@ cut points inside silences with ~0.06 s padding so no word is clipped. Verify ev
 by listening through whisper on the window — this is how hidden fillers ("eh…", a stray "y")
 show up:
 ```bash
-bash $SK/chunk.sh clip/analysis/audio16k.wav es 8.28 8.70 8.70 9.50
+bash "$SK"/chunk.sh clip/analysis/audio16k.wav es 8.28 8.70 8.70 9.50
 ```
 Short windows can hallucinate; confirm with two overlapping windows and the energy map.
 
-Then `python3 $SK/build.py --words` (from `clip/`) lists every word with refined source/output
+Then `python3 "$SK"/build.py --words` (from `clip/`) lists every word with refined source/output
 time — use it to pick anchor word ids and to check the cut didn't swallow a word.
 
 **Word-edge rule (the most repeated client fix: "pitch", "tiempo", "nada", "lesiones", "Bolkana", "personal" were all
@@ -142,7 +166,7 @@ own segment (the facecam is defocused behind the card, so the jump is invisible)
 
 **Faster, verified path (`cutplan.py`).** Write `clip/keep.json` with the word-id ranges to keep
 (`[["w1","w38"],["w42","w45"],…]`, dropping fillers, retakes, stutters, asides), then
-`python3 $SK/cutplan.py <project>`: it places every cut at the lowest-energy point next to the edge words, shortens
+`python3 "$SK"/cutplan.py <project>`: it places every cut at the lowest-energy point next to the edge words, shortens
 pauses > 0.26 s, writes `segments`, prunes `transcript.json` to the kept words (original kept as `transcript_full.json`
 — do text fixes there) and **transcribes the edited audio whole**. Read that transcript: a clipped onset shows up as a
 changed word ("es" for "ves", missing "mucho", "exactamente" for "completamente"). Nudge those segment edges by hand
@@ -199,7 +223,7 @@ Plan **fewer** graphics than you think: about one strong idea per 6–8 s, and p
 
 Measure face centres (source px) per shot:
 ```bash
-bash $SK/faces.sh assets/<video>.mp4 17 18 2 960 720 240 0 clip/analysis/woman.jpg
+bash "$SK"/faces.sh assets/<video>.mp4 17 18 2 960 720 240 0 clip/analysis/woman.jpg
 ```
 (`t0 dur every cropW cropH cropX cropY out`) — read positions off the grid (the script prints the
 px-per-cell). Sample every ~2 s on moving speakers, one point for static ones. Enter them as
@@ -255,7 +279,7 @@ default climax), `flash(t)`, `shake(t)` (opt-in only), plus CSS classes
 not by name — this is how the #16 beds were picked:
 
 1. **Analysis of the library** (once; re-run when songs are added — and check new ones are instrumental with whisper):
-   `$PY $SK/music_analyze.py` → `_sistema/musica/analisis.json`: tempo + pulse strength, key (major/minor), brightness,
+   `$PY "$SK"/music_analyze.py` → `_sistema/musica/analisis.json`: tempo + pulse strength, key (major/minor), brightness,
    band balance, percussiveness and the **energy curve in 5 s blocks**. `CANCIONES.md` turns it into character, "usar para"
    and "tramos útiles". (`$PY` = `~/Bolkana/Bolkana Podcast/_sistema/tools/whisper-venv/bin/python3`, it has numpy.)
 2. **Song ↔ script.** Match the clip's tone and its "por qué funciona" to the song's character (minor/dark/low → serious,
@@ -266,7 +290,7 @@ not by name — this is how the #16 beds were picked:
    toward it (Midnight Velvet 0–15 s) works; otherwise pick a stable stretch. Bright songs (the_mountain, podcast) → lower volume.
 4. **Cut on the beat:**
 ```bash
-$PY $SK/bgmcut.py <project> <song> <approx from s> <total s>   # snaps to the strongest onset ±1 s → .media/audio/bgm/bgm.mp3
+$PY "$SK"/bgmcut.py <project> <song> <approx from s> <total s>   # snaps to the strongest onset ±1 s → .media/audio/bgm/bgm.mp3
 ```
    It snaps the start to a hit of the rhythm, fades in 0.25 s, fades out 1.5 s ending on the last word (`<total>` = video length,
    no tail) and normalizes to −16 LUFS. Then edit.json: `"music": {"file": ".media/audio/bgm/bgm.mp3", "volume": 0.22, "carve": 0.3}`.
@@ -277,17 +301,17 @@ SFX: soft whoosh on each B-roll entrance (vol ≈ 0.22), low impact on the clima
 **Subtle, never in front: about 20 dB under the voice (19–21).** Volume usually lands at 0.18–0.28 (bright songs like
 the_mountain or The Choice lower). Measure:
 ```bash
-bash $SK/mixcheck.sh <project>      # → "music sits 20.1 dB under the voice → OK"; target 19–21 dB
+bash "$SK"/mixcheck.sh <project>      # → "music sits 20.1 dB under the voice → OK"; target 19–21 dB
 ```
 It grabs the renderer's own mix (as-is and with the music muted), so it measures what the viewer hears. About 1–2 min.
 
 ## 8 · Build → check → carve → QA → render
 
 ```bash
-cd clip && python3 $SK/build.py && cd ..
+cd clip && python3 "$SK"/build.py && cd ..
 npm run check                      # must pass with 0 errors
-bash $SK/carve.sh .                # voice carve of the music bed (strength = music.carve, 0.3) — re-run after EVERY build
-bash $SK/mixcheck.sh .             # once per clip, before the final render: music 19–21 dB under the voice
+bash "$SK"/carve.sh .                # voice carve of the music bed (strength = music.carve, 0.3) — re-run after EVERY build
+bash "$SK"/mixcheck.sh .             # once per clip, before the final render: music 19–21 dB under the voice
 npx hyperframes snapshot --at <beat midpoints and every transition start/end> --no-end --describe false -o <scratch>/snaps .
 ```
 Inspect the contact sheets yourself; fix and rebuild until clean — `references/qa-checklist.md`

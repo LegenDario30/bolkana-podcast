@@ -20,3 +20,7 @@ _sistema/marca/brand-book/*.pdf
 
 # Excepción: el vídeo de referencia de estilo sí viaja con el sistema
 !_sistema/referencias/*.mp4
+
+# Estado local de Claude Code (las skills de .claude/skills sí van al repo)
+.claude/scheduled_tasks.lock
+.claude/settings.local.json

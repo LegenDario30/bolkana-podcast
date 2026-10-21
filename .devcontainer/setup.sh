@@ -41,10 +41,12 @@ echo "== 5/7 Claude Code =="
 npm install -g @anthropic-ai/claude-code
 
 echo "== 6/7 Skills de Bolkana =="
+# Las skills viven en el repo (.claude/skills). Se enlazan en ~/.claude/skills para que las rutas antiguas sigan valiendo.
+# hyperframes-audio (la usa carve.sh) no está en el repo: se copia desde el Mac con tar si falta.
 mkdir -p "$HOME/.claude/skills"
-for s in bolkana-episodio bolkana-podcast-vertical-clip; do
-  rm -rf "$HOME/.claude/skills/$s"
-  cp -R "$ROOT/_sistema/skills-backup/$s" "$HOME/.claude/skills/$s"
+for s in "$ROOT"/.claude/skills/*/; do
+  s=$(basename "$s"); rm -rf "$HOME/.claude/skills/$s"
+  ln -s "$ROOT/.claude/skills/$s" "$HOME/.claude/skills/$s"
 done
 
 echo "== 7/7 HyperFrames: Chrome de render y comprobación =="

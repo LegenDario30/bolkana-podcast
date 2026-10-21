@@ -5,7 +5,7 @@ description: >
   Video-first spec of the Bolkana brand (Brand Book v1.0, June 2025 + bolkana-design.md, April 2026).
   Graphite ground, Bone type, Lava + Grass as secondary accents and as the soft "Bolkana gradient"
   glow (≤25 % of the frame), Outfit SemiBold display + Karla body, sentence case, no shadows, solid
-  rounded icons, isotype / logotype in Bone on dark. Full rules: ~/.claude/skills/bolkana-podcast-vertical-clip/references/brand.md
+  rounded icons, isotype / logotype in Bone on dark. Full rules: .claude/skills/bolkana-podcast-vertical-clip/references/brand.md (en este repo)
 unit: the frame — 1080×1920 primary (shorts); 1920×1080 and 1:1 use the same atoms
 principle: atoms are sacred · composition is free · the gradient is an accent, never the subject
 
