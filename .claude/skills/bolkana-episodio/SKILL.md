@@ -31,7 +31,7 @@ Hay que continuar desde lo que falte y no rehacer lo que ya está. Fases de un c
 | 3 · Edición | 2 agentes en paralelo (límite de uso), en el Codespace, renders en cola | `04_renders/final/` | **El usuario revisa cada clip** |
 | 4 · Frames para la miniatura | Sesión principal | `05_miniaturas/frames/` (invitado y Lavin sonriendo) | **El usuario elige y hace la miniatura** |
 | 5 · Fichas | Sesión principal | `06_pies-de-foto/` (una por clip) | — |
-| 6 · Subida | **El usuario, a mano** | Buffer (IG, TikTok, YouTube) + LinkedIn | El usuario |
+| 6 · Subida | Sesión principal (skill bolkana-buffer) + el usuario publica LinkedIn | Buffer (IG, TikTok, YouTube) | **El usuario da la carpeta de Drive** |
 
 No hay que avanzar a la fase siguiente sin la decisión de los puntos marcados con ✋. Lo que sí se puede hacer es solapar
 fases: mientras el usuario revisa los primeros clips, siguen editándose los demás.
@@ -107,11 +107,11 @@ Ver `references/ficha-publicacion.md`. Hay una por clip aprobado, con los textos
 Instagram, TikTok, título y descripción de YouTube Shorts, y LinkedIn. Al final se le da al usuario un orden sugerido de
 publicación.
 
-### 6 · Subida (la hace el usuario)
-El usuario sube cada vídeo a Buffer a mano, pega los textos de la ficha y usa los huecos de la cola de Buffer. LinkedIn
-lo publica él directamente. **No hay que crear ni programar posts en Buffer**, porque el MCP solo acepta URLs públicas y
-el plan gratuito tiene 10 posts programados. Si el usuario contrata un plan de pago o pide otra cosa, se vuelve a plantear.
-Cuando diga qué clips ha subido, se marcan como `subido`.
+### 6 · Subida (skill bolkana-buffer)
+El usuario sube los finales a una carpeta de Google Drive y da el enlace; Claude los programa en Buffer con la skill
+**bolkana-buffer** (un clip al día en IG, TikTok y YouTube, colaborador de la empresa del invitado en los Reels, portada
+en el segundo 2, máximo 10 por canal). LinkedIn lo publica el usuario a mano con el texto de la ficha. Los clips
+programados se marcan como `subido`.
 
 Se puede hacer de forma opcional, si el usuario lo pide: unas semanas después, revisar con `get_aggregated_post_metrics`
 de Buffer qué tipo de gancho funcionó mejor y tenerlo en cuenta en los guiones del siguiente episodio.

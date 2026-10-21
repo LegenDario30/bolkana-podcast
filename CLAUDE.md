@@ -7,7 +7,8 @@ Abre Claude Code **siempre en esta carpeta** (`~/Bolkana/Bolkana Podcast`), no d
 
 ```
 .claude/skills/              LAS skills de Bolkana (única copia, con historial en git): bolkana-episodio,
-                             bolkana-podcast-vertical-clip, bolkana-podcast-miniaturas, bolkana-pies-de-foto.
+                             bolkana-podcast-vertical-clip, bolkana-podcast-miniaturas, bolkana-pies-de-foto,
+                             bolkana-newsletter, bolkana-buffer.
                              Se editan aquí y se suben con commit; no duplicarlas en ~/.claude/skills ni en claude.ai.
 _sistema/                    lo que se reutiliza en todos los episodios (no se toca por episodio)
   tools/                     ffmpeg + whisper.cpp (los scripts de la skill lo encuentran solos)
@@ -31,6 +32,7 @@ episodios/<NN | Invitado>/
   05_miniaturas/frames/      frames candidatos (invitado y Lavin sonriendo) que saca Claude
   05_miniaturas/final/       frames elegidos por el usuario + sus miniaturas 16-9 y 4-5 (skill bolkana-podcast-miniaturas)
   06_pies-de-foto/           una ficha de publicación por clip
+  newsletter.json / .html    la newsletter del episodio (skill bolkana-newsletter)
   .media/                    música (bgm) y sfx del episodio
   _archivo/                  pruebas y versiones viejas; no se edita
 ```
@@ -51,9 +53,14 @@ Lo dirige la skill **bolkana-episodio** ("vamos con el 17", "sigue con el 17", "
 5. Claude saca **frames** del invitado y de Lavin sonriendo → `05_miniaturas/frames/`. El usuario elige y crea él las miniaturas
    con **bolkana-podcast-miniaturas** en `05_miniaturas/final/` (frame ≠ miniatura). Una ficha de publicación por clip
    (Instagram, TikTok, YouTube Shorts, LinkedIn) con **bolkana-pies-de-foto** → `06_pies-de-foto/`.
-6. **El usuario sube los vídeos a Buffer a mano** (cola de Buffer: IG, TikTok, YouTube) y publica LinkedIn a mano. Claude
-   no crea posts en Buffer.
-7. `EPISODIO.md`, `estado.json` y `_sistema/musica/CANCIONES.md` siempre al día.
+6. **Buffer** con **bolkana-buffer** (desde el #17): el usuario sube los finales a una carpeta de Drive y da el enlace;
+   Claude programa por el MCP de Buffer un clip al día, el mismo día en IG (Reel con la empresa del invitado como
+   colaborador), TikTok y YouTube Shorts, con hora fija y empezando el día siguiente, portada en el segundo 2 y el texto
+   de la ficha. Máximo 10 posts programados por canal (plan gratuito). Claude nunca borra posts: los pasa a borrador.
+   LinkedIn no está en Buffer: Claude da el texto y el usuario lo publica a mano.
+7. **Newsletter** con **bolkana-newsletter**: texto corto en la voz de Lavin, plantilla de la marca y borrador en Brevo
+   por su MCP. Claude nunca la envía ni la programa: lo hace el usuario, 1–2 h después de publicar el episodio.
+8. `EPISODIO.md`, `estado.json` y `_sistema/musica/CANCIONES.md` siempre al día.
 
 ## Trabajo en la nube (Codespace) — desde el #17
 
