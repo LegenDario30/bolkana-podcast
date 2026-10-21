@@ -31,3 +31,25 @@ Ninguna tiene voz ni letra (comprobado con whisper). El carácter de cada una se
 | 08 agotamiento | Enough | 84.2 s | 0.22 |
 | 09 razones equivocadas | The Choice | 0.0 s | 0.22 |
 | 10 filtro del no | chill | 11.1 s | 0.22 |
+
+### #17 · Kompanion (2026-10-18)
+
+| Clip | Canción | Desde | Volumen |
+|---|---|---|---|
+| 01 cinco_mil (v2, épica) | Midnight Velvet | 7.15 s | 0.28 |
+| 02 vende_antes | the_mountain | 9.6 s | 0.28 |
+| 03 equity_objetivos | Midnight Velvet | 15.2 s | 0.25 |
+| 04 le_da_igual | instagram reel | 0.0 s | 0.24 |
+| 05 ia_asesoria | The Choice | 0.0 s | 0.185 |
+| 06 diez_administrativos | chill | 8.5 s | 0.22 |
+| 07 generacion_jubila (v2) | Enough | 84.2 s | 0.24 |
+| 08 chatgpt_marketing | funk | 0.0 s | 0.22 |
+| 09 cto_confianza | podcast | 5.85 s | 0.22 |
+| 10 espana_pequena | Midnight Velvet | 60.0 s | 0.28 |
+| 11 plan_financiero | Enough | 19.8 s | 0.28 |
+| 12 cafe_desconocido | funk | 20.0 s | 0.27 |
+| 16 dejar_el_curro | The Choice | 60.0 s | 0.195 |
+| 15 ronda_una_semana | instagram reel | 0.0 s | 0.26 |
+| 19 sin_prisa | Enough | 99.1 s | 0.24 |
+| 21 vino_karetta | The Choice | 29.4 s | 0.20 |
+| 22 pregunta_ibinn | the_mountain | 20.8 s | 0.18 |
