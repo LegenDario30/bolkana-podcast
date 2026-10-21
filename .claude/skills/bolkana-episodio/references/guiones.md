@@ -11,8 +11,13 @@ para las palabras exactas) en la sesión principal. No se reparte entre agentes:
   público de founders se hace. Si el gancho real está a mitad de la respuesta, se empieza ahí (o se trae delante con "…").
 - **Una sola idea**, con desarrollo corto y un **cierre que remata** (frase redonda, conclusión, consejo accionable, risa).
   El clip acaba en la última palabra, sin end card.
-- **Duración libre** (regla del usuario, 18-10-2026): no hay un rango fijo. Si el tema es relevante y aguanta, el clip
-  puede ser largo (60 s o más); si la idea es corta, corto. Lo que manda es que no haya relleno.
+- **Duración: 35–45 s por defecto** (lección del #17, 21-10-2026). El cliente pidió alargar a 35–45 s seis clips que
+  salieron de 16–25 s: un clip corto se le queda «muy corto». Si la idea es buena pero breve, completarla con trozos de
+  otros momentos que la refuercen (contexto antes, ejemplo o consecuencia después). Más de 45 s solo si el tema lo aguanta
+  sin relleno (los fijos de vinos e Ibinn suelen ir a 45–50 s).
+- **Hook y cierre:** pendiente de una sesión aparte con el usuario (método Alex Hormozi). Hasta entonces: el gancho de los
+  2–3 primeros segundos tiene que poder entenderse solo y chocar; el cierre tiene que rematar (frase redonda o
+  consecuencia), nunca terminar en una coletilla.
 - **Público:** founders y startups (fundraising, inversores, VC, equipo, salud mental del emprendedor, producto). Prima lo
   que se comparte o genera debate.
 - **Variedad:** mezclar tonos (consejo práctico, confesión personal, polémica, humor, dato) y que no haya dos clips con la

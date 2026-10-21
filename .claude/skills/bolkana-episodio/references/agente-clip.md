@@ -20,6 +20,8 @@ Guion: sección "Clip <NN>" de guiones.md en la carpeta del episodio (gancho/des
 Usa la skill bolkana-podcast-vertical-clip (cárgala con la herramienta Skill) y sigue su proceso desde el paso 1b.3
 (analyze → align → edit.json → cutplan → escenas → música → build → check → carve → mixcheck → QA).
 Lee y respeta ~/Bolkana/Bolkana Podcast/CLAUDE.md (reglas fijas de marca, gráficos, cortes y música).
+Antes de entregar, repasa la sección «Client corrections from #17» de la skill de clips: es lo que el cliente
+corrigió en el #17 y no debe repetirse.
 
 Música: elige con _sistema/musica/analisis.json y CANCIONES.md y corta con bgmcut.py. Intenta no
 repetir las canciones ya asignadas en este episodio: <lista de clip → canción ya asignadas>.
@@ -73,3 +75,19 @@ TODO el trabajo pesado se hace en el Codespace, no en el Mac (8 GB, sin máster)
   Comandos largos (render, whisper): lánzalos con run_in_background y espera la notificación; no hagas bucles de sleep.
 - No toques otros clips, no hagas git, no instales paquetes y no pares el Codespace (lo gestiona la sesión principal).
 ```
+
+## Lecciones del #17 (añadir al encargo cuando aplique)
+
+- **Versiones:** `rsync -a --exclude media <vigente>/ <nueva>/ && cp -al <vigente>/media <nueva>/media`, y nuevo id en
+  `meta.json`. No `cp -a` a secas (duplicaba GB y llenó el disco) ni `cp -al` del proyecto entero.
+- **Encuadre:** en el editado del #17 los primeros planos venían pegados arriba; escala mínima con la imagen arriba y
+  comprobar que la cara no queda bajo la cabecera. En pantallas partidas, la cara de cada uno centrada en su mitad (el
+  cliente se quejó de «ver solo el techo»). Revisar el seguimiento de cara (`trk`) en los tramos finales: una pista mal
+  medida desliza la cámara.
+- **Bordes de segmento:** revisar fotograma a fotograma; un cambio de cámara del editado 1–2 fotogramas antes del borde
+  deja un fotograma suelto (la «pared roja» del #17). Mover el borde al fotograma del corte.
+- **Subtítulos:** tras el render, mirar el **último fotograma**: si queda una palabra encima del subtítulo final, hay un
+  grupo pegado. `build.py` quita `¿?¡!` de los subtítulos; si el cliente pide signos, se reponen con un `clip/postbuild.sh`
+  que se ejecuta después de cada build (ver clip 21 del #17).
+- **Bajar al Mac:** comprobar que el tamaño coincide con el del Codespace.
+- **No borrar en el Mac:** sobrescribir el MP4 con el nuevo; la versión anterior queda en `borradores/_prev/` del Codespace.

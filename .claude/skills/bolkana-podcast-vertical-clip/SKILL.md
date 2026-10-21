@@ -74,6 +74,30 @@ append it or any outro to a vertical clip).
 
 `SK="$HOME/Bolkana/Bolkana Podcast/.claude/skills/bolkana-podcast-vertical-clip/scripts"` (always quote it: the path has spaces)
 
+## Client corrections from #17 — get these right on the first render
+
+Three review rounds of #17 (Kompanion, Oct 2026) asked for the same kinds of fixes. Check every one before reporting a clip:
+- **Captions — text.** Start in lower case, also at the start of a sentence, unless it's a proper noun (`build.py` does it;
+  add names to `edit.json` → `"proper": [...]` when needed). Listen to every doubtful word: whisper mishears names and
+  fast speech («técnicamente» heard as «tenían currículums», «que ha crecido» as «que agresiva», «Cobee» as «COVID»,
+  «lo quiere» as «lo quieres», «a los otros fondos» without the «a»). Use the guest's real company and product names. No
+  leading dashes («—De tinto»). Swear words censored with an asterisk («H*stia»). A ghost word stuck behind the captions
+  means a sub-0.09 s group: check the last frame.
+- **Captions — speech.** Cut stutters, self-corrections and repeated words («nada… pero nada», «diez trabajadores, diez
+  proveedores», «los inversores… los fundadores»): keep only the corrected phrase, with a clean word-edge cut.
+- **Ending.** The last word must be whole and breathe a little: leave the tail of the word plus ~0.2 s, without letting the
+  next speaker's word in. A clipped final word was sent back twice.
+- **Framing.** Close-ups in the edited master sit high: lowest scale with the image pinned to the top, the face never under
+  the header. In split screens each face centred in its half («only the ceiling shows» was rejected). Re-measure face
+  tracks near the end of each shot: a wrong track point slides the camera off the guest. No single stray frame from
+  another shot at a segment edge (the «red wall» frame) — step through each edge frame by frame.
+- **Split screens** last at least ~3–4 s so both people read; a 1.5 s split was too short.
+- **Graphics.** Chips sit on the chest, well below the face — chips near the chin were rejected. Remove any chip the speech
+  doesn't need. Chips are white; Lava only for caption keywords, not for one chip in a list.
+- **Music** fits the clip's mood: the_mountain was rejected for a data/ageing-sector clip; «épica» means the most dramatic
+  build in the library (Midnight Velvet's rise). Re-cut the bed whenever the length changes.
+- **Delivery.** Compare file size Mac ↔ Codespace after downloading (a truncated copy looked like a frozen frame).
+
 ## 1 · Analyse the footage
 
 ```bash

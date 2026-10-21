@@ -24,7 +24,7 @@ episodios/<NN | Invitado>/
   guiones.md                 los ~20 guiones propuestos (Claude) de los que el usuario elige 12–15
   01_fuente/                 máster "#NN | Invitado.mp4"
   02_transcripcion/          transcripción completa con tiempos por palabra
-  03_clips/_base/            proyecto vacío; cada clip = cp -R _base clip_NN_<slug>
+  03_clips/_base/            proyecto vacío; cada clip = cp -a _base clip_NN_<slug>
   03_clips/clip_NN_<slug>/   un proyecto HyperFrames por clip (solo la versión vigente)
   04_renders/final/          lo que se entrega: "#NN | clip_NN_<slug>.mp4"
   04_renders/borradores/     renders anteriores (_prev/ para versiones sustituidas)
@@ -47,7 +47,7 @@ Lo dirige la skill **bolkana-episodio** ("vamos con el 17", "sigue con el 17", "
    **Siempre 2 reels fijos más:** los vinos de Karetta Maluca (el invitado coge su botella) y la pregunta de Alejandro
    Tagliaferro (Ibinn).
 4. Edición con la skill **bolkana-podcast-vertical-clip**: `fragments.json` → `cut_fragments.py` → un proyecto por clip,
-   editados por **2–3 agentes en paralelo**; los renders van **de uno en uno** (`render_queue.sh`). El usuario revisa cada clip.
+   editados por **2 agentes en paralelo** (el límite de uso del plan manda; ver la skill); los renders van **de uno en uno** (`render_queue.sh`). El usuario revisa cada clip.
 5. Claude saca **frames** del invitado y de Lavin sonriendo → `05_miniaturas/frames/`. El usuario elige y crea él las miniaturas
    con **bolkana-podcast-miniaturas** en `05_miniaturas/final/` (frame ≠ miniatura). Una ficha de publicación por clip
    (Instagram, TikTok, YouTube Shorts, LinkedIn) con **bolkana-pies-de-foto** → `06_pies-de-foto/`.
@@ -78,9 +78,16 @@ El Mac (MacBook Pro 2017, 8 GB, ~5 GB libres) no aguanta el trabajo pesado. Repa
   (`gh api "/users/LegenDario30/settings/billing/usage?year=AAAA&month=M"`).
 - **Verificado (13-10-2026):** el render de HyperFrames en el Codespace sale igual que en el Mac (clip 05 del #16: SSIM 0,994,
   mismo volumen) y tarda ~6 s por segundo de vídeo. /dev/shm = 1 GB, ffmpeg 4.4.2.
-- **Pendiente:** conectar rclone con Google Drive (la autorización la hace el usuario en su navegador); cambiar
-  `transcribe.py` por faster-whisper (small int8 ≈ 7,6× más rápido, 96 % de palabras iguales) y añadirlo a `setup.sh`;
-  adaptar la skill bolkana-episodio para que los pasos pesados corran en el Codespace.
+- **Hecho en el #17:** rclone conectado a Drive (remoto `gdrive:`); la skill bolkana-episodio ya trabaja en el Codespace
+  (`cs.sh`, versión de trabajo a 1440p, `render_queue.sh` allí). Las skills viven en `.claude/skills/` del repo y en el
+  Codespace se enlazan en `~/.claude/skills` (`setup.sh`).
+- **Transcripción:** se mantiene `transcribe.py` (openai-whisper small) tal como estaba. En el #17 se probó faster-whisper
+  y al usuario no le convenció; queda para decidir más adelante (21-10-2026). No cambiarlo sin que lo pida.
+- **Cerrar un episodio (para dejar sitio al siguiente; el disco del Codespace es de 32 GB):** con los clips aprobados y los
+  finales en el Mac, en el Codespace sobran el máster de `01_fuente/` (sigue en Drive), los `*_joined.mp4` de
+  `03_clips/*/media/` (se regeneran del máster), `02_transcripcion/podcast_16k.wav` y `04_renders/borradores/`. Claude no
+  borra de forma permanente: le da al usuario el comando para que lo ejecute él. Luego `git stash list` limpio, rama
+  fusionada en `main` y Codespace en `main` antes de crear el siguiente.
 - Permisos: pedir permiso al usuario antes de descargar, subir a servicios externos o hacer commit/push. Claude nunca
   introduce credenciales; las autorizaciones (gh, rclone) las hace el usuario.
 
@@ -89,8 +96,9 @@ El Mac (MacBook Pro 2017, 8 GB, ~5 GB libres) no aguanta el trabajo pesado. Repa
 - **Marca Bolkana siempre** (ver skill y `_sistema/marca/frame.md`): Graphite/Bone/Lava/Grass, Outfit 600 + Karla, cabecera v2
   (Bolkana + "En colaboración con" Ibinn arriba, YouTube wearebolkana abajo), vídeo **en color**, **sin end card**: el clip acaba en
   la última palabra.
-- **Nunca editar un clip ya entregado ni sobrescribir su render.** Copiar el proyecto a `clip_NN_<slug>_v2` (`cp -R`, conserva
-  enlaces), editar la copia, mover el render antiguo a `04_renders/borradores/_prev/` y renderizar con el mismo nombre en `final/`.
+- **Nunca editar un clip ya entregado ni sobrescribir su render.** Copiar el proyecto a `clip_NN_<slug>_v2`
+  (`rsync -a --exclude media OLD/ NEW/ && cp -al OLD/media NEW/media`: los vídeos como enlaces duros para no llenar el disco),
+  editar la copia y renderizar con el mismo nombre en `final/` (`render_queue.sh` guarda el anterior en `borradores/_prev/`).
 - **Gráficos (gusto del cliente):** pocos, nunca encima de una cara (revisar en cada zoom y corte), nunca repitiendo lo que dicen los
   subtítulos. Nada de "slabs" grandes de clímax, flashes ni zoom agresivo, ni eyebrows tipo "Como decimos en Bolkana". Clímax =
   subtítulos normales con palabras clave en Lava. Gustó: la "nube de jerga" (chips flotantes con la cara desenfocada) y listas de
@@ -102,3 +110,6 @@ El Mac (MacBook Pro 2017, 8 GB, ~5 GB libres) no aguanta el trabajo pesado. Repa
   Hay que normalizar cada recorte a −16 LUFS; el volumen suele quedar en 0.18–0.28. El tramo se recorta empezando en un golpe del
   ritmo, con fundido de entrada de 0.25 s y de salida de 1.5 s al final del clip.
 - El título no debe verse en el frame 0; entra hacia ~0.35 s.
+- **Aprendido en el #17:** subtítulos en minúscula al empezar frase salvo nombres propios (lo hace `build.py`), clips de
+  35–45 s por defecto, y la lista de correcciones del cliente en la skill de clips («Client corrections from #17»):
+  repasarla antes de entregar cada clip para evitar rondas de cambios.
