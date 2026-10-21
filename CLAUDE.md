@@ -6,6 +6,9 @@ Abre Claude Code **siempre en esta carpeta** (`~/Bolkana/Bolkana Podcast`), no d
 ## Estructura
 
 ```
+.claude/skills/              LAS skills de Bolkana (única copia, con historial en git): bolkana-episodio,
+                             bolkana-podcast-vertical-clip, bolkana-podcast-miniaturas, bolkana-pies-de-foto.
+                             Se editan aquí y se suben con commit; no duplicarlas en ~/.claude/skills ni en claude.ai.
 _sistema/                    lo que se reutiliza en todos los episodios (no se toca por episodio)
   tools/                     ffmpeg + whisper.cpp (los scripts de la skill lo encuentran solos)
   marca/                     brand-book/ (PDF), brand-assets/ (paquete completo), kit-video/ (logos+fuentes de los clips),
@@ -13,7 +16,6 @@ _sistema/                    lo que se reutiliza en todos los episodios (no se t
   referencias/               referencia.mp4 (estilo), capturas-cabecera/ (cómo se ve la cabecera en Reels)
   plantilla-episodio/        esqueleto que copia nuevo-episodio.sh
   musica/                    canciones sin copyright para los clips + CANCIONES.md (carácter y asignaciones) + analisis.json
-  skills-backup/             copia de las skills bolkana-podcast-vertical-clip y bolkana-episodio (las vivas están en ~/.claude/skills)
   hyperframes-CLAUDE.md      guía genérica de HyperFrames (comandos npm, preview, check)
   nuevo-episodio.sh
 episodios/<NN | Invitado>/
@@ -41,6 +43,9 @@ Lo dirige la skill **bolkana-episodio** ("vamos con el 17", "sigue con el 17", "
 2. Transcribir el máster entero una vez (whisper, palabra a palabra) a `02_transcripcion/`.
 3. Claude lee la transcripción completa y propone **~20 guiones** en `guiones.md` (gancho / desarrollo / cierre con tiempos
    exactos, cita, "por qué funciona"). **El usuario elige 12–15.** El "por qué funciona" decide título, énfasis y zooms.
+   Duración libre (si el tema lo merece, más largo) y fragmentos de distintos momentos si suman a la misma idea.
+   **Siempre 2 reels fijos más:** los vinos de Karetta Maluca (el invitado coge su botella) y la pregunta de Alejandro
+   Tagliaferro (Ibinn).
 4. Edición con la skill **bolkana-podcast-vertical-clip**: `fragments.json` → `cut_fragments.py` → un proyecto por clip,
    editados por **2–3 agentes en paralelo**; los renders van **de uno en uno** (`render_queue.sh`). El usuario revisa cada clip.
 5. Claude saca **frames** del invitado y de Lavin sonriendo → `05_miniaturas/frames/`. El usuario elige y crea él las miniaturas

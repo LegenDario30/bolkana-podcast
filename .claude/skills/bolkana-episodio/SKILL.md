@@ -9,14 +9,14 @@ Esta skill dirige y las demás ejecutan. Todo pasa en **una sesión principal** 
 lee la transcripción entera, propone los guiones, reparte la edición entre agentes y lleva el estado. Lee primero el
 `CLAUDE.md` de la raíz: sus reglas fijas (marca, gráficos, cortes, música) mandan sobre todo lo de aquí.
 
-`E=~/.claude/skills/bolkana-episodio/scripts` · `PY=~/Bolkana/Bolkana Podcast/_sistema/tools/whisper-venv/bin/python3`
+`E="$HOME/Bolkana/Bolkana Podcast/.claude/skills/bolkana-episodio/scripts"` (siempre entre comillas: la ruta tiene espacios; en el Codespace `~/Bolkana/Bolkana Podcast` enlaza al repo) · `PY=~/Bolkana/Bolkana Podcast/_sistema/tools/whisper-venv/bin/python3`
 (con whisper y numpy) · `EP="episodios/<NN | Invitado>"`
 
 ## Retomar siempre desde el estado
 
 Cada episodio tiene un `estado.json` con la fase de cada clip. Al empezar o al oír "sigue con el 17" / "¿cómo va?":
 ```bash
-python3 $E/estado.py "$EP"
+python3 "$E"/estado.py "$EP"
 ```
 Hay que continuar desde lo que falte y no rehacer lo que ya está. Fases de un clip:
 `propuesto → elegido → editando → revision → aprobado → ficha → subido` (o `descartado`).
@@ -27,7 +27,7 @@ Hay que continuar desde lo que falte y no rehacer lo que ya está. Fases de un c
 |---|---|---|---|
 | 0 · Preparar | Sesión principal | carpeta, máster, `EPISODIO.md` | — |
 | 1 · Transcribir | Sesión principal, en segundo plano | `02_transcripcion/` | — |
-| 2 · Guiones | Sesión principal | `guiones.md` con ~20 clips | **El usuario elige 12–15** |
+| 2 · Guiones | Sesión principal | `guiones.md` con ~20 clips + 2 fijos (vinos, pregunta Ibinn) | **El usuario elige 12–15** |
 | 3 · Edición | 2–3 agentes en paralelo, renders en cola | `04_renders/final/` | **El usuario revisa cada clip** |
 | 4 · Frames para la miniatura | Sesión principal | `05_miniaturas/frames/` (invitado y Lavin sonriendo) | **El usuario elige y hace la miniatura** |
 | 5 · Fichas | Sesión principal | `06_pies-de-foto/` (una por clip) | — |
@@ -45,7 +45,7 @@ fases: mientras el usuario revisa los primeros clips, siguen editándose los dem
 
 ### 1 · Transcribir (una vez por episodio)
 ```bash
-"$PY" $E/transcribe.py "$EP"        # con run_in_background: tarda bastante con 1 h de audio
+"$PY" "$E"/transcribe.py "$EP"        # con run_in_background: tarda bastante con 1 h de audio
 ```
 Genera `podcast_words.json` (palabra a palabra) y `podcast.txt` (por segmentos y con tiempos). Mientras transcribe, se
 sacan unos frames del máster para saber dónde se sienta cada hablante y en qué planos sale. Eso se apunta en

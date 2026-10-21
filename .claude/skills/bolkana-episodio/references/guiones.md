@@ -11,18 +11,31 @@ para las palabras exactas) en la sesión principal. No se reparte entre agentes:
   público de founders se hace. Si el gancho real está a mitad de la respuesta, se empieza ahí (o se trae delante con "…").
 - **Una sola idea**, con desarrollo corto y un **cierre que remata** (frase redonda, conclusión, consejo accionable, risa).
   El clip acaba en la última palabra, sin end card.
-- **Duración 15–45 s** (lo entregado en el #16 va de 15 a 41 s; el punto dulce es 20–30 s).
+- **Duración libre** (regla del usuario, 18-10-2026): no hay un rango fijo. Si el tema es relevante y aguanta, el clip
+  puede ser largo (60 s o más); si la idea es corta, corto. Lo que manda es que no haya relleno.
 - **Público:** founders y startups (fundraising, inversores, VC, equipo, salud mental del emprendedor, producto). Prima lo
   que se comparte o genera debate.
 - **Variedad:** mezclar tonos (consejo práctico, confesión personal, polémica, humor, dato) y que no haya dos clips con la
   misma idea. Repartir por todo el episodio, no solo por los primeros 20 minutos.
-- Se pueden **saltar trozos** con "…" (máx. 2–3 fragmentos por clip) si el salto no rompe el sentido ni la imagen.
+- **Los fragmentos no tienen que ser seguidos** (regla del usuario, 18-10-2026): un clip puede juntar trozos de
+  distintos momentos del episodio si suman a la misma idea (un dato de los primeros minutos que refuerza una opinión del
+  final, por ejemplo). Sin límite fijo de fragmentos; cada salto tiene que entenderse sin contexto y no romper la imagen.
 - Que hable sobre todo el invitado; Lavin cuando su pregunta o reacción hace de gancho o de remate.
+
+## Dos reels fijos en todos los episodios
+
+Además de los ~20 guiones, cada episodio lleva siempre estos dos. Van numerados detrás de los demás, entran directamente
+como `elegido` y no cuentan en los 12–15 que elige el usuario:
+
+- **Vinos de Karetta Maluca:** Lavin presenta los vinos (la causa a la que va parte del precio) y el invitado elige y coge
+  su botella. Suele estar al final del episodio.
+- **Pregunta de Alejandro Tagliaferro (Ibinn):** Lavin lanza la pregunta que manda Alejandro, de la agencia Ibinn, y el
+  invitado responde. Se puede montar la respuesta con trozos de otros momentos si la completan.
 
 ## Proceso
 
 1. Leer `podcast.txt` entero y marcar momentos candidatos (unos 30).
-2. Quedarse con ~20, ordenados de más a menos potencial.
+2. Quedarse con ~20, ordenados de más a menos potencial, y añadir los dos reels fijos (vinos e Ibinn).
 3. Para cada uno, buscar en `podcast_words.json` la primera y la última palabra exactas (los tiempos de los briefs
    de Gemini eran aproximados; aquí ya salen exactos).
 4. Escribir `guiones.md` en la raíz del episodio con el formato de abajo y registrar cada uno en el estado:

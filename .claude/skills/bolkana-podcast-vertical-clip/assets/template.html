@@ -132,8 +132,9 @@ CFG.caps.forEach((g,i)=>{
   const d=document.createElement('div');d.className='cg';d.id='cg'+i;
   g.w.forEach(w=>{const s=document.createElement('span');if(w[2])s.className='k';s.textContent=w[1];d.appendChild(s);});
   capsEl.appendChild(d);
-  tl.fromTo(d,{opacity:0,y:14},{opacity:1,y:0,duration:.09,ease:'power2.out',...IR},g.s);
-  tl.set(d,{opacity:0},g.e);
+  // entrance never outlasts the group: a 0.09 s tween on a shorter group finished after the hide and left it stuck on screen
+  tl.fromTo(d,{opacity:0,y:14},{opacity:1,y:0,duration:Math.max(.01,Math.min(.09,g.e-g.s-.01)),ease:'power2.out',...IR},g.s);
+  tl.set(d,{opacity:0},Math.max(g.e,g.s+.02));
 });
 
 // ---------- camera: speaker-tracked reframe + stacked split (pure function of time → seek-safe) ----------

@@ -13,7 +13,9 @@ until mkdir "$LOCK" 2>/dev/null; do
 done
 echo "$(basename "$P")" > "$LOCK/who"; trap 'rm -rf "$LOCK"' EXIT
 mkdir -p "$(dirname "$OUT")"
-[ -f "$OUT" ] && { mkdir -p "$(dirname "$OUT")/../borradores/_prev"; mv "$OUT" "$(dirname "$OUT")/../borradores/_prev/"; echo "render anterior movido a borradores/_prev/"; }
+if [ -f "$OUT" ]; then PREV="$(dirname "$OUT")/../borradores/_prev"; mkdir -p "$PREV"; B="$(basename "$OUT" .mp4)"; D="$PREV/$B.mp4"
+  [ -e "$D" ] && D="$PREV/${B}_$(date +%Y%m%d-%H%M%S).mp4"   # never overwrite an earlier saved version
+  mv "$OUT" "$D"; echo "render anterior movido a $D"; fi
 cd "$P" || { echo "ERROR: no existe el proyecto $P"; exit 1; }
 npm run render -- -o "$OUT" || { echo "ERROR: el render ha fallado"; exit 1; }
 [ -s "$OUT" ] || { echo "ERROR: no se ha escrito $OUT"; exit 1; }
