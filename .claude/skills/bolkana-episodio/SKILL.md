@@ -52,7 +52,8 @@ sacan unos frames del máster para saber dónde se sienta cada hablante y en qu�
 `EPISODIO.md` → Hablantes.
 
 ### 2 · Guiones (~20 → el usuario elige 12–15)
-Ver `references/guiones.md`: criterios, formato y registro en el estado. Se hace en la sesión principal, que lee la
+Ver `references/guiones.md`: criterios, método gancho → retención → recompensa (Alex Hormozi, 11-11-2026), formato y
+registro en el estado. Se hace en la sesión principal, que lee la
 transcripción completa. Al usuario se le da una tabla corta y se espera a que elija.
 
 ### 3 · Edición en paralelo (en el Codespace, desde el #17)

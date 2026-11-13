@@ -177,16 +177,24 @@ VB = "\n".join(vid(s, 1, "      ") for s in bot)
 AU = "\n".join(f'  <audio id="a{i}" src="{src}" data-start="{s["st"]}" data-duration="{s["d"]}" data-media-start="{s["ms"]}" data-track-index="10"></audio>' for i, s in enumerate(segs, 1))
 mu = E.get("music")
 MU = f'  <audio id="music" src="{mu["file"]}" data-start="0" data-duration="{total}" data-track-index="11" data-volume="{mu.get("volume", .22)}"></audio>' if mu else ""
+tt = E.get("title", {})
+TOUT = at(tt.get("out", 3.0))
+# title hook sound (standard since 2026-11-11): pop on line a, low hit on the Lava line b, pop on c, whoosh as it leaves.
+# Files ship in assets/brand/sfx and are copied to <project>/brand/sfx. "title": {"sfx": false} turns them off.
+TSFX = [] if tt.get("sfx") is False else [
+    {"at": 0, "file": "brand/sfx/title_pop.mp3", "vol": .3},
+    {"at": .22, "file": "brand/sfx/title_boom.mp3", "vol": .7, "dur": .9},
+    {"at": .48, "file": "brand/sfx/title_pop.mp3", "vol": .3} if tt.get("c") else None,
+    {"at": round(TOUT - .5, 2), "file": "brand/sfx/title_whoosh.mp3", "vol": .3, "dur": .45}]
 SX = []
-for i, x in enumerate(E.get("sfx", []), 1):
+for i, x in enumerate([s for s in TSFX if s] + E.get("sfx", []), 1):
     t = at(x["at"]); d = x.get("dur", 0.6) if x.get("dur") != "rest" else round(total - t, 2)
     d = round(min(d, total - t), 2)   # never run past the end of the clip
     SX.append(f'  <audio id="sx{i}" src="{x["file"]}" data-start="{round(t,2)}" data-duration="{d}" data-track-index="{12 + i % 3}" data-volume="{x.get("vol", .22)}"></audio>')
 
-tt = E.get("title", {})
 cfg = {"srcW": E.get("srcW", 1920), "srcH": E.get("srcH", 1080), "total": total, "vidEnd": vidEnd, "segs": segs, "caps": out, "t": T,
        "trk": trk, "camTop": camTop, "camBot": camBot, "split": split, "seam": seam,
-       "capSkip": E.get("capSkip", []), "titleOut": at(tt.get("out", 3.5)), "header": bool(BR["header"])}
+       "capSkip": E.get("capSkip", []), "titleOut": TOUT, "header": bool(BR["header"])}
 
 print("anchors:", json.dumps(T, ensure_ascii=False))
 print(f"video {vidEnd}s · total {total}s · jump cuts at {J[1:]}")
@@ -197,7 +205,7 @@ if "--dry" in args: sys.exit()
 rd = lambda f: open(f).read() if os.path.exists(f) else ""
 
 # ---------- brand kit -> <projectRoot>/brand (fonts + logos; icons are inlined) ----------
-for sub in ("fonts", "logos"):
+for sub in ("fonts", "logos", "sfx"):
     dst = P(os.path.join("brand", sub)); os.makedirs(dst, exist_ok=True)
     for f in os.listdir(os.path.join(BRAND, sub)): shutil.copy2(os.path.join(BRAND, sub, f), os.path.join(dst, f))
 def icon(m):
@@ -214,7 +222,7 @@ FOOT = "filter:grayscale(1) contrast(1.08) brightness(.98)" if BR["footage"] == 
 h = open(TEMPLATE).read()
 for k, v in {"__LANG__": E.get("lang", "es"), "__SRCW__": str(cfg["srcW"]), "__SRCH__": str(cfg["srcH"]), "__TOTAL__": str(total),
              "__VIDEOS__": V, "__VIDEOS_B__": VB, "__AUDIO__": AU, "__MUSIC__": MU, "__SFX__": "\n".join(SX),
-             "__TITLE_PILL__": tt.get("eyebrow", tt.get("pill", BR["eyebrow"])), "__TITLE_A__": tt.get("a", ""), "__TITLE_B__": tt.get("b", ""),
+             "__TITLE_PILL__": tt.get("eyebrow", tt.get("pill", BR["eyebrow"])), "__TITLE_A__": tt.get("a", ""), "__TITLE_B__": tt.get("b", ""), "__TITLE_C__": tt.get("c", ""),
              "__END_A__": tt.get("endA", tt.get("a", "")), "__END_B__": tt.get("endB", tt.get("b", "")), "__FOOTAGE_FILTER__": FOOT,
              "__YT_ICON__": icon("youtube"), "__YT_HANDLE__": BR["youtube"],
              "__SCENES_CSS__": rd("scenes.css"), "__SCENES_HTML__": scenes_html, "__SCENES_JS__": rd("scenes.js"),

@@ -20,8 +20,9 @@ logo always come from the Bolkana brand, so don't copy a reference's palette or 
 - Captions: Outfit 600 at 84 px, 1–2 words, at most 13 chars, inside x 180–900 in sentence case (as spoken), Bone, keywords in Grass, soft dark shadow. The band
   top sits at 1392 px (bottom third, above the platform UI). Captions come in hard (0.09 s rise) and go out hard. In a split they ride the
   seam (y≈960).
-- Title: an eyebrow (isotype + "The Bolkana Podcast", Karla 500) and two Outfit 600 lines at 88 px, revealed
-  from a mask. A Lava/Grass glow rises from the bottom-left corner. Everything leaves with a blur-up before the first B-roll.
+- Title hook (since 2026-11-11): up to three Outfit 600 lines, Bone 112 px / Lava 156 px / Bone 112 px, readable on frame 0,
+  kinetic (pop, slam with shake, slide), no captions under it and no glow; it leaves with a blur-up at 2.6–3.2 s and the
+  header logos come in then. See SKILL.md § 3 → Title.
 - Brand header v2 for the whole clip: Bolkana logotype + "En colaboración con" Ibinn in the row of Instagram's back arrow and
   camera, YouTube icon + `wearebolkana` centred at y≈1566. No end card: the clip ends on its last word, with the climax graphic
   still on screen.

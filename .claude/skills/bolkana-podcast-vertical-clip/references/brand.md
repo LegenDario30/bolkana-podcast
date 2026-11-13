@@ -44,7 +44,7 @@ always an accent:
 
 | Role | Font | (video) size on 1080×1920 |
 |---|---|---|
-| Titles, captions, big numbers, slabs | **Outfit SemiBold 600** (Light 300 / Regular 400 for large quiet display) | captions 84 px · title 88 px · card headlines 96–130 px |
+| Titles, captions, big numbers, slabs | **Outfit SemiBold 600** (Light 300 / Regular 400 for large quiet display) | captions 84 px · title hook 112 / 156 px · card headlines 96–130 px |
 | Subtitles, eyebrows, labels | **Karla Medium 500** | 28–40 px |
 | Body / small copy inside cards | **Karla Regular 400 / Light 300** | 30–38 px |
 
@@ -63,7 +63,7 @@ Files are in `assets/brand/logos/`, and build.py copies them to `<project>/brand
 
 | File | Use |
 |---|---|
-| `isotype_bone.svg` | The mark on its own, on Graphite, dark footage or Lava: title eyebrow |
+| `isotype_bone.svg` | The mark on its own, on Graphite, dark footage or Lava (no longer used in the title since 2026-11-11) |
 | `logotype_bone.svg` | Wordmark with the symbol, on dark: **top-left of the header** |
 | `ibinn_logotype.png` | Sponsor (Ibinn), white artwork cropped from `Logomark/Ibinn logotype/Logo_Sponsor.png`: **top-right of the header** |
 | `logotype_claim_bone.svg` | Wordmark with the claim "Smart Fundraising for Bold Founders." (not used in vertical clips: no end card) |
@@ -76,7 +76,7 @@ Files are in `assets/brand/logos/`, and build.py copies them to `<project>/brand
 - Safe zone: keep at least the height of the "B" of the logotype clear on every side. For the isotype,
   keep its own height clear.
 - Minimum digital width is 100 px without the claim and 300 px with it. 
-- Use the logo with its symbol. The symbol may appear alone (title eyebrow).
+- Use the logo with its symbol. The symbol may appear alone, but not in the title hook.
 
 ## Iconography
 
@@ -111,14 +111,14 @@ colours.
   42 px text). `.chip.dark` is the surface with a hairline border, and `.chip.lava` is the negative or emphasis version
   (e.g. the last item, "Ni para nada"). The `.x` badge is Lava.
 - **Eyebrow / label**: `.eyebrow` is Karla 500 in Grass on dark and in muted on light, like the
-  web's category labels. In video, use it **only in the title**. The client removed every eyebrow placed above a
+  web's category labels. In video the title no longer carries it (2026-11-11). The client removed every eyebrow placed above a
   scene or chip list ("Como decimos en Bolkana", "Te impacta en"…).
 - **Emphasis in captions (default climax)**: the caption keeps running and the key words turn Lava
   (`.cg span.red`, via `redWords()`). This replaced the big slabs ("Un cóctel mortal", "Burnout", "Arriesgando todo",
   "No te lo tomes a lo personal").
 - **Climax slab** (only for a 1–3 word exclamation, e.g. "¡Petarás!"): Lava ground, Bone Outfit SemiBold text, 24–30 px
   radius, no shadow, compact (≤ 110 px text), off the face.
-- **Brand header v2 (client-approved 2026-10-01; always on, from 0.1 s to the last frame)** — built into the template:
+- **Brand header v2 (client-approved 2026-10-01; on from the moment the title hook leaves — ≈2.4–3 s — to the last frame; changed 2026-11-11)** — built into the template:
   - **Top row**, between Instagram's back arrow (x≈100–135) and camera (x≈932–985), y≈165–215 of the frame:
     `logotype_bone.svg` 236 px wide at x 327 / y 174, and the sponsor logo `ibinn_logotype.png` (Ibinn), 58 px tall, at
     x 635 / y 165, with **"En colaboración con"** (Karla 500, 26 px, Bone) centred above Ibinn at y 131.
@@ -145,7 +145,7 @@ tab bar). Measured on the frame:
 | x > ≈900, y ≈1000–1640 | IG action column (like, comment, repost, share, more, audio) | Keep text off it. Captions span x 180–900. |
 | y > ≈1640 | IG username, Follow, description, audio line | No text or key content. |
 
-Captions are therefore 1–2 words and 13 chars or fewer (`capChars` 13), inside x 180–900. Title lines are 16 chars or fewer at 88 px.
+Captions are therefore 1–2 words and 13 chars or fewer (`capChars` 13), inside x 180–900. Title hook lines: ≤ 13 chars at 112 px, ≤ 10 chars for the Lava punch line at 156 px.
 
 ## Motion
 

@@ -15,7 +15,7 @@ script turns that into `index.html`.
 The worked example in `references/example/` is a real 34 s clip (restyled to the Bolkana brand).
 Open it whenever you are unsure how a field or a scene is meant to look. It predates the client's graphics review: some of
 its scenes (`#sB`, `#sE`, `#cLes`, the flash on `#pet`) were later rejected. Check `references/scenes.md` → "client verdict"
-before copying one.
+before copying one. Its `title` (eyebrow + 2 lines, entering at 0.35 s) is also the old format: use § 3 → Title for the hook.
 
 ## Brand: Bolkana (non-negotiable)
 
@@ -32,7 +32,8 @@ scenes.** The template already implements the brand layer:
 - **Reels safe area (iPhone 17, full screen):** the frame is cropped about 52–98 px per side, the back arrow and camera cover
   y < 240, the action column covers x > 900 between y 1000 and 1640, and the username and description cover y > 1640. Text stays in
   x 130–950, captions in x 180–900, and scene elements below y 400 (top chips at `top:410px`). See brand.md → "Safe area".
-- Title with an eyebrow (isotype + "The Bolkana Podcast") and a Lava/Grass glow taking 25 % of the frame or less.
+- **Title hook** (standard since 2026-11-11): a big kinetic headline readable on frame 0, no captions under it, no glow on
+  the opening, and the header logos enter as it leaves. See § 3 → Title.
 - **No end card.** The client asked (2026-10-03) for the clip to end where the speech ends: no Graphite card, no title echo, no
   logotype + claim, no extra 2 s. `tail` defaults to 0; the climax simply holds on screen until the last frame.
 - **Graphics policy (client review of 10 clips, 2026-10-03/05):** few graphics, never over a face, never repeating the
@@ -177,12 +178,21 @@ the transcript and add `"pinned": true` — build.py then keeps that onset.
 ## 3 · Plan beats (write it before building)
 
 A table of output-time beats: what the viewer sees at each moment. Guidelines that worked:
-- **Title** over the first ~2–4 s in the lower-middle (above captions), out before the first
-  B-roll or split. It enters at ~0.35 s (eyebrow), with the lines at +0.1/+0.25 s, and must **not** be visible on frame 0.
-  If `title.out` is early, the template pulls the entry forward, but never before 0.05 s. Plan for `title.out` ≥ 2.5 s. If the first scene
-  starts before ~2 s (clip 8's card started at 1.9 s), push that scene later or the title is barely readable. The template sets its start state at 0 (`tl.set`), so check
-  the 0 s snapshot whenever you touch the title code; it used to flash in full, vanish and then slide in. Write it in the brand voice: short, direct, sentence case, ≤16 chars per line, specific
-  (e.g. "El ghosting de los fondos", "Inversores sin empatía").
+- **Title = the text hook** (standard since 2026-11-11; the user's pick "C2" of the #17 clip-01 hook test). It is what a
+  viewer without sound reads before deciding to stay, so it must **grab hard**: a concrete number, a result, a contrast or
+  a promise the clip pays off ("Empezamos / con 5.000 € / y sin producto"). It does **not** have to be words the guest says:
+  it can state a verified fact about the guest or the company that makes the clip land ("Empezaron con 5.000 € / y hoy
+  facturan X"), but never an invented or unconfirmed figure. Lazy labels are out ("No tengas prisa", "Un café con un desconocido").
+  The template builds it:
+  - Up to 3 lines: `a` Bone 112 px (on screen at frame 0) · `b` **the punch, Lava 156 px**, slams in at 0.22 s with a
+    shake and a low hit · `c` optional Bone 112 px, slides in at 0.48 s. ≤ 13 chars on `a`/`c`, ≤ 10 on `b` (safe width 820 px).
+  - Lower-middle (top 950, under the face). The camera reframes the face above it: check the 0 s snapshot for overlap.
+  - **No captions** while it is on screen; they come in at `title.out` − 0.02 s. Plan `title.out` at **2.6–3.2 s**
+    (an anchor word); the lines leave with a blur-up from `out` − 0.45 s.
+  - Header logos enter at max(2.4 s, `out` − 0.2 s), never on the opening. No glow on the opening.
+  - Sound (automatic, `brand/sfx/`): pop on `a`, low hit on `b`, pop on `c`, whoosh as it leaves; `"sfx": false` turns it off.
+  - The first scene, split or B-roll starts after `title.out`.
+  - Camera: open on a slow zoom-out under the headline (first `camera.top` key with `s` > `s1`, e.g. `[0,"EW",2.75,2.2,.5,"full"]`).
 - **Ending:** no end card. The video ends on the last word, **complete** (see the word-edge rule). The default climax is the
   captions carrying on as usual with the key words in Lava (`redWords(['cóctel','mortal'])`), plus the impact SFX and
   at most a smooth zoom. A slab is acceptable only for a short exclamation of 1–3 words ("¡Petarás!", "¡Que no coja el
@@ -204,7 +214,7 @@ Plan **fewer** graphics than you think: about one strong idea per 6–8 s, and p
   "Touch points", "Quédate con lo que sea" were all removed). A graphic must add what the caption can't: a number, a
   list that builds, a metaphor, an UI (chat), a cloud of terms.
 - **No eyebrows/headers above scenes** ("Como decimos en Bolkana", "Términos que no has oído…", "El motor equivocado",
-  "Aplica el filtro…", "Inversores que han emprendido", "Te impacta en" were too much). The title eyebrow is the only one.
+  "Aplica el filtro…", "Inversores que han emprendido", "Te impacta en" were too much). Since 2026-11-11 the title has no eyebrow either.
 - **One idea → one big icon.** A concept card with a heading and text ("La admiración de mi padre") became just the brand
   icon, ~400 px, centred, popping on the key word and pulsing on the next.
 - **No grey/defocus screen just to re-show a list that's already on screen.** Defocus only for new content; a list that
@@ -247,7 +257,7 @@ Copy `references/example/edit.json` and adapt. Fields:
 | `textFixes`, `keywords`, `capSkip` | caption text fixes, Grass-highlighted words, words hidden from captions |
 | `keys` / `srcKeys` | anchors: name → word id / name → source seconds (camera cuts) |
 | `tracks` | face tracks per person/shot `[[srcT,x,y],…]` |
-| `title` | `eyebrow` (default "The Bolkana Podcast"), `a`, `b` lines, `out` anchor |
+| `title` | `a`, `b` (the Lava punch), optional `c` lines, `out` anchor (2.6–3.2 s), `sfx` (default on) — see § 3 → Title |
 | `brand` | `{"footage":"color"\|"bw", "header":true, "youtube":"wearebolkana", "eyebrow":"…"}` (see brand.md) |
 | `tail`, `capChars` | seconds held after the last word (default 0 — keep it 0: no end card), max chars per caption group (default 13, to fit the 720 px safe caption band) |
 | `camera.top` / `camera.bottom` | rows `[at, track, scale, driftScale, faceX, faceY('full'/'split'/0–1), easeDur?, 'out'/'io'?]` |
