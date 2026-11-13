@@ -51,12 +51,14 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#232323}
 #hdr::after{content:"En colaboración con";position:absolute;left:694px;top:131px;transform:translateX(-50%);font-family:var(--body);font-weight:500;font-size:26px;line-height:1;letter-spacing:.01em;color:var(--bone);white-space:nowrap}
 #hdr .yt{position:absolute;left:0;right:0;top:1566px;height:48px;display:flex;align-items:center;justify-content:center;gap:10px;font-family:var(--body);font-weight:500;font-size:28px;letter-spacing:.01em;color:var(--bone);white-space:nowrap}
 #hdr .yt .ico{font-size:40px}
-/* title: eyebrow (isotype + programme) + two sentence-case Outfit SemiBold lines */
-#title{position:absolute;left:130px;right:130px;top:990px}
-#title .eb{display:flex;align-items:center;gap:16px;height:44px;margin-bottom:18px;font-family:var(--body);font-weight:500;font-size:30px;letter-spacing:.02em;color:var(--bone);opacity:0}
-#title .eb img{height:26px;width:auto;display:block}
-#title .ln{display:block;overflow:hidden;padding:4px 0 8px}
-#title .ln span{display:block;white-space:nowrap;font-family:var(--display);font-weight:600;font-size:88px;line-height:1.02;letter-spacing:-.015em;color:var(--bone);text-shadow:0 8px 34px rgba(0,0,0,.45)}
+/* title hook (standard since 2026-11-11, test "C2" of #17 clip 01): a big kinetic headline visible from frame 0,
+   no captions under it, header logos enter when it leaves. Line a Bone 112 px · line b (the punch) Lava 156 px · line c Bone 112 px */
+#title{position:absolute;left:130px;right:130px;top:950px}
+#title .ln{display:block}
+#title .ln span{display:block;white-space:nowrap;font-family:var(--display);font-weight:600;font-size:112px;line-height:1;letter-spacing:-.025em;color:var(--bone);text-shadow:0 10px 40px rgba(0,0,0,.6);transform-origin:0 50%}
+#title .ln.b span,#title .ln.c span{opacity:0}   /* line a is visible on frame 0 by CSS (a tl.set at 0 is not applied to frame 0) */
+#title .ln.b span{font-size:156px;color:var(--lava);margin:16px 0 14px;text-shadow:0 0 26px rgba(0,0,0,.9),0 0 8px rgba(0,0,0,.7)}
+#title .ln span:empty{display:none}
 /* captions (1–2 words, hard in/out, keyword in Grass) */
 #caps{position:absolute;left:180px;right:180px;top:1392px;height:130px}  /* clear of the side crop and the IG action column (right ≈178 px) */
 .cg{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;gap:20px;opacity:0}
@@ -106,10 +108,10 @@ __SFX__
 
 __SCENES_HTML__
 
-  <div id="title">
-    <div class="eb"><img src="brand/logos/isotype_bone.svg" alt="">__TITLE_PILL__</div>
+  <div id="title" data-layout-allow-overlap>
     <div class="ln a"><span>__TITLE_A__</span></div>
     <div class="ln b"><span>__TITLE_B__</span></div>
+    <div class="ln c"><span>__TITLE_C__</span></div>
   </div>
   <div id="caps"></div>
   <div id="flash"></div>
@@ -191,19 +193,20 @@ function redWords(words,inGroupWith){const n=x=>x.toLowerCase().replace(/[.,;:¡
     if(inGroupWith&&!cg.w.some(w=>n(w[1])===n(inGroupWith)))return;
     el.querySelectorAll('span').forEach(sp=>{if(W.includes(n(sp.textContent)))sp.classList.add('red');});});}
 
-// ---------- title (+ glow accent) · brand header ----------
-// the title must be hidden on frame 0: IR tweens don't apply their from-state before they start (it used to flash fully
-// visible at 0 s, vanish, then slide in). Set every start state at 0 explicitly.
-const TI=Math.min(.35,Math.max(.05,CFG.titleOut-2.6));   // title entry: ~0.35 s, earlier when the first scene comes early (title needs ~1.4 s fully on screen)
-tl.set('#title .eb',{opacity:0,x:-24},0); tl.set('#title .ln span',{yPercent:110},0); tl.set('#glowT',{opacity:0,scale:.85},0);
-tl.fromTo('#title .eb',{opacity:0,x:-24},{opacity:1,x:0,duration:.45,ease:'power3.out',...IR},TI);
-tl.fromTo('#title .ln.a span',{yPercent:110},{yPercent:0,duration:.6,ease:'power4.out',...IR},TI+.1);
-tl.fromTo('#title .ln.b span',{yPercent:110},{yPercent:0,duration:.6,ease:'power4.out',...IR},TI+.25);
-tl.fromTo('#glowT',{opacity:0,scale:.85},{opacity:.9,scale:1,duration:.9,ease:'power2.out',...IR},TI-.05);   // title enters at ~0.35 s (client: later, never on frame 0)
-tl.to('#glowT',{x:40,y:-30,duration:Math.max(.5,CFG.titleOut-.8),ease:'sine.inOut'},.9);
-tl.to('#title',{opacity:0,y:-30,filter:'blur(12px)',duration:.35,ease:'power2.in'},CFG.titleOut-.35);
-tl.to('#glowT',{opacity:0,duration:.5,ease:'power2.in'},CFG.titleOut-.4);
-if(CFG.header){tl.fromTo('#hdr',{opacity:0,y:-12},{opacity:1,y:0,duration:.5,ease:'power3.out',...IR},.1);}
+// ---------- title hook · brand header (standard since 2026-11-11, user's pick "C2" of the #17 clip-01 hook test) ----------
+// Frame 0 already shows line a; b (the punch, Lava) slams in at 0.22 s with a shake, c slides in at 0.48 s.
+// No captions under the headline (they come in as it leaves), no glow on the opening, the header logos enter after it.
+// Start states are set at 0 explicitly (IR tweens don't apply their from-state before they start).
+const TO=CFG.titleOut;
+tl.set('#glowT',{opacity:0},0);
+tl.set(['#title .ln.b span','#title .ln.c span'],{opacity:0},0);
+tl.fromTo('#title .ln.a span',{scale:1.18},{scale:1,duration:.2,ease:'power3.out',...IR},0);
+tl.fromTo('#title .ln.b span',{opacity:0,scale:1.6},{opacity:1,scale:1,duration:.26,ease:'back.out(2.2)',...IR},.22);
+if(document.querySelector('#title .ln.b span').textContent.trim())shake(.22);
+tl.fromTo('#title .ln.c span',{opacity:0,x:-60},{opacity:1,x:0,duration:.24,ease:'power3.out',...IR},.48);
+tl.to('#title .ln span',{opacity:0,y:-50,filter:'blur(12px)',duration:.3,stagger:.05,ease:'power2.in'},TO-.45);
+tl.set('#caps',{opacity:0},0); tl.set('#caps',{opacity:1},TO-.02);
+if(CFG.header){tl.set('#hdr',{opacity:0},0);tl.fromTo('#hdr',{opacity:0,y:-12},{opacity:1,y:0,duration:.5,ease:'power3.out',...IR},Math.max(2.4,TO-.2));}
 
 // ---------- project scenes ----------
 __SCENES_JS__

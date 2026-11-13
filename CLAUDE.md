@@ -7,7 +7,8 @@ Abre Claude Code **siempre en esta carpeta** (`~/Bolkana/Bolkana Podcast`), no d
 
 ```
 .claude/skills/              LAS skills de Bolkana (única copia, con historial en git): bolkana-episodio,
-                             bolkana-podcast-vertical-clip, bolkana-podcast-miniaturas, bolkana-pies-de-foto.
+                             bolkana-podcast-vertical-clip, bolkana-podcast-miniaturas, bolkana-pies-de-foto,
+                             bolkana-newsletter, bolkana-buffer.
                              Se editan aquí y se suben con commit; no duplicarlas en ~/.claude/skills ni en claude.ai.
 _sistema/                    lo que se reutiliza en todos los episodios (no se toca por episodio)
   tools/                     ffmpeg + whisper.cpp (los scripts de la skill lo encuentran solos)
@@ -31,6 +32,7 @@ episodios/<NN | Invitado>/
   05_miniaturas/frames/      frames candidatos (invitado y Lavin sonriendo) que saca Claude
   05_miniaturas/final/       frames elegidos por el usuario + sus miniaturas 16-9 y 4-5 (skill bolkana-podcast-miniaturas)
   06_pies-de-foto/           una ficha de publicación por clip
+  newsletter.json / .html    la newsletter del episodio (skill bolkana-newsletter)
   .media/                    música (bgm) y sfx del episodio
   _archivo/                  pruebas y versiones viejas; no se edita
 ```
@@ -41,8 +43,11 @@ Lo dirige la skill **bolkana-episodio** ("vamos con el 17", "sigue con el 17", "
 
 1. `./_sistema/nuevo-episodio.sh 17 "Nombre Invitado" [ruta/master.mp4]` y pedir cargo y empresa del invitado.
 2. Transcribir el máster entero una vez (whisper, palabra a palabra) a `02_transcripcion/`.
-3. Claude lee la transcripción completa y propone **~20 guiones** en `guiones.md` (gancho / desarrollo / cierre con tiempos
-   exactos, cita, "por qué funciona"). **El usuario elige 12–15.** El "por qué funciona" decide título, énfasis y zooms.
+3. Claude lee la transcripción completa y propone **~20 guiones** en `guiones.md` con el método **gancho → retención →
+   recompensa** de Alex Hormozi (7 tipos de gancho, mínimo 3; título que completa la primera frase; el cierre cumple lo
+   prometido; detalle en `references/guiones.md` de bolkana-episodio): gancho / desarrollo / cierre con tiempos exactos,
+   cita, título en pantalla y "por qué funciona". **El usuario elige 12–15.** El título va tal cual al clip; el "por qué
+   funciona" decide énfasis y zooms.
    Duración libre (si el tema lo merece, más largo) y fragmentos de distintos momentos si suman a la misma idea.
    **Siempre 2 reels fijos más:** los vinos de Karetta Maluca (el invitado coge su botella) y la pregunta de Alejandro
    Tagliaferro (Ibinn).
@@ -51,9 +56,14 @@ Lo dirige la skill **bolkana-episodio** ("vamos con el 17", "sigue con el 17", "
 5. Claude saca **frames** del invitado y de Lavin sonriendo → `05_miniaturas/frames/`. El usuario elige y crea él las miniaturas
    con **bolkana-podcast-miniaturas** en `05_miniaturas/final/` (frame ≠ miniatura). Una ficha de publicación por clip
    (Instagram, TikTok, YouTube Shorts, LinkedIn) con **bolkana-pies-de-foto** → `06_pies-de-foto/`.
-6. **El usuario sube los vídeos a Buffer a mano** (cola de Buffer: IG, TikTok, YouTube) y publica LinkedIn a mano. Claude
-   no crea posts en Buffer.
-7. `EPISODIO.md`, `estado.json` y `_sistema/musica/CANCIONES.md` siempre al día.
+6. **Buffer** con **bolkana-buffer** (desde el #17): el usuario sube los finales a una carpeta de Drive y da el enlace;
+   Claude programa por el MCP de Buffer un clip al día, el mismo día en IG (Reel con la empresa del invitado como
+   colaborador), TikTok y YouTube Shorts, con hora fija, portada en el segundo 2 y el texto
+   de la ficha. Máximo 10 posts programados por canal (plan gratuito). Claude nunca borra posts: los pasa a borrador.
+   LinkedIn no está en Buffer: Claude da el texto y el usuario lo publica a mano.
+7. **Newsletter** con **bolkana-newsletter**: texto corto en la voz de Lavin, plantilla de la marca y borrador en Brevo
+   por su MCP. Claude nunca la envía ni la programa: lo hace el usuario, 1–2 h después de publicar el episodio.
+8. `EPISODIO.md`, `estado.json` y `_sistema/musica/CANCIONES.md` siempre al día.
 
 ## Trabajo en la nube (Codespace) — desde el #17
 
@@ -94,7 +104,7 @@ El Mac (MacBook Pro 2017, 8 GB, ~5 GB libres) no aguanta el trabajo pesado. Repa
 ## Reglas fijas (aprendidas en el #16)
 
 - **Marca Bolkana siempre** (ver skill y `_sistema/marca/frame.md`): Graphite/Bone/Lava/Grass, Outfit 600 + Karla, cabecera v2
-  (Bolkana + "En colaboración con" Ibinn arriba, YouTube wearebolkana abajo), vídeo **en color**, **sin end card**: el clip acaba en
+  (Bolkana + "En colaboración con" Ibinn arriba, YouTube wearebolkana abajo; entra cuando se va el título), vídeo **en color**, **sin end card**: el clip acaba en
   la última palabra.
 - **Nunca editar un clip ya entregado ni sobrescribir su render.** Copiar el proyecto a `clip_NN_<slug>_v2`
   (`rsync -a --exclude media OLD/ NEW/ && cp -al OLD/media NEW/media`: los vídeos como enlaces duros para no llenar el disco),
@@ -109,7 +119,10 @@ El Mac (MacBook Pro 2017, 8 GB, ~5 GB libres) no aguanta el trabajo pesado. Repa
   Debe sonar **sutil, de fondo, nunca protagonista**: unos **20 dB bajo la voz** (≈19–21, medir con `mixcheck.sh`), con carve 0.3.
   Hay que normalizar cada recorte a −16 LUFS; el volumen suele quedar en 0.18–0.28. El tramo se recorta empezando en un golpe del
   ritmo, con fundido de entrada de 0.25 s y de salida de 1.5 s al final del clip.
-- El título no debe verse en el frame 0; entra hacia ~0.35 s.
+- **Arranque (desde el 11-11-2026, prueba «C2» del #17):** el título es el gancho de texto. Grande y legible desde el
+  frame 0 (2–3 líneas, la del medio en Lava), sin subtítulos debajo; se va hacia los 2,6–3,2 s y entonces entran los
+  subtítulos y los logos de la cabecera. Sin luces al principio. Tiene que captar muchísimo la atención y no tiene por qué
+  repetir lo que dice el invitado: se escribe a demanda (cifra, resultado, contraste), siempre con datos ciertos.
 - **Aprendido en el #17:** subtítulos en minúscula al empezar frase salvo nombres propios (lo hace `build.py`), clips de
   35–45 s por defecto, y la lista de correcciones del cliente en la skill de clips («Client corrections from #17»):
   repasarla antes de entregar cada clip para evitar rondas de cambios.

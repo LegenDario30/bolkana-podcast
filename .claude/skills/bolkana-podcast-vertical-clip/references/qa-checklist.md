@@ -32,7 +32,7 @@ Snapshot at every beat midpoint **and** at the start/end of every transition, sp
     (the snapshot shows Outfit's round "a" and "g", not a fallback sans, so if it falls back check that `brand/fonts` exists
     next to index.html); sentence case; no emoji; no shadows on cards; the glow stays at 25 % of the frame or less
     and never touches the logo; logos undistorted and in their safe zone; the header v2 (Bolkana + "En colaboración con" Ibinn at the top, YouTube
-    `wearebolkana` above the IG username) is visible from 0.1 s to the end and nothing overlaps it. **Reels safe area (iPhone 17 full screen):** no logo or text in the side 130 px (crop),
+    `wearebolkana` above the IG username) is visible from the moment the title hook leaves (≈2.4–3 s) to the end and nothing overlaps it. **Reels safe area (iPhone 17 full screen):** no logo or text in the side 130 px (crop),
     above y≈240 (arrow and camera), at x > 900 between y 1000 and 1640 (action column) or below y 1640 (username and description). No scene
     element above y 400. Check a snapshot with a top chip on screen, and preview it in the iPhone mockup if in doubt.
 
@@ -52,8 +52,8 @@ Known lint warnings you can accept: `composition_file_too_large`, `audio_carve_u
 23. **Seam and cards**: the Lava→Grass split line never crosses a card or the defocus.
 24. **Revision round**: work in a new `_vN` project copy, render to the deliverable folder, never overwrite without
     moving the old file to `_prev/`, and report each requested point by its number.
-25. **Frame 0**: snapshot at 0 s and 0.05 s. Nothing that animates in later (title lines, eyebrow, glow, chips) may be
-    visible yet. A `fromTo(...,{...IR})` doesn't apply its from-state before it starts, so add a `tl.set` at 0 or CSS `opacity:0`.
+25. **Frame 0**: snapshot at 0 s and 0.05 s. Title line `a` must already be readable (the text hook); the header, captions,
+    title lines `b`/`c`, glow and chips must not be visible yet. A `fromTo(...,{...IR})` doesn't apply its from-state before it starts, so add a `tl.set` at 0 or CSS `opacity:0`.
 26. **Music subtle, in the background**: a song from `_sistema/musica/` (never synthesized), and `bash "$SK"/mixcheck.sh <project>`
     reports the bed 19–21 dB under the voice (−16 LUFS excerpt, volume ≈ 0.18–0.28, carve 0.3). Fade in 0.25 s, fade out 1.5 s
     ending on the last word.

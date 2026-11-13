@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="x-apple-disable-message-reformatting">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark">
+<title>{{ASUNTO}}</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&family=Karla:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; padding:0; -webkit-text-size-adjust:100%; }
+  table { border-collapse:collapse; mso-table-lspace:0; mso-table-rspace:0; }
+  img { border:0; outline:none; text-decoration:none; }
+  .btn:hover, .pill:hover { opacity:.85; }
+  @media (max-width:620px) {
+    .wrap { width:100% !important; }
+    .px { padding-left:20px !important; padding-right:20px !important; }
+    .h1 { font-size:26px !important; line-height:32px !important; }
+    .pill-td { display:block !important; width:100% !important; padding:0 0 10px 0 !important; }
+  }
+  /* Se adapta al modo del lector (claro u oscuro), como un correo normal */
+  @media (prefers-color-scheme: dark) {
+    .tx { color:#f3f3f3 !important; }
+    .ft, .ft a { color:#a0a0a0 !important; }
+    .ft { border-top-color:#3a3a3a !important; }
+    .bt { background:#f3f3f3 !important; }
+    .bta, .bta span { color:#232323 !important; }
+  }
+  [data-ogsc] .tx { color:#f3f3f3 !important; }
+  [data-ogsc] .ft, [data-ogsc] .ft a { color:#a0a0a0 !important; }
+  [data-ogsb] .bt { background:#f3f3f3 !important; }
+  [data-ogsc] .bta, [data-ogsc] .bta span { color:#232323 !important; }
+</style>
+</head>
+<body style="margin:0;padding:0;">
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td align="center" style="padding:16px 0;">
+
+<table role="presentation" class="wrap" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;">
+
+  <!-- Cabecera de marca -->
+  <tr><td class="px" style="padding:0 24px;">
+    <img src="https://img.mailinblue.com/8232339/images/content_library/original/68d3ee8ab5223caa0e040c15.jpg" width="552" alt="Bolkana" style="display:block;width:100%;height:auto;border-radius:12px;">
+  </td></tr>
+
+  <!-- Etiqueta + titular -->
+  <tr><td class="px" style="padding:44px 40px 0 40px;">
+    <p style="margin:0 0 14px 0;font-family:'Karla',Arial,sans-serif;font-size:13px;line-height:18px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#44a85a;">The Bolkana Podcast · {{NUMERO}}</p>
+    <h1 class="h1 tx" style="margin:0;font-family:'Outfit',Arial,sans-serif;font-size:30px;line-height:38px;font-weight:600;color:#232323;">{{TITULAR}}</h1>
+  </td></tr>
+
+  <!-- Gancho (Lavin, primera persona) -->
+  <tr><td class="px tx" style="padding:28px 40px 0 40px;font-family:'Karla',Arial,sans-serif;font-size:18px;line-height:30px;font-weight:400;color:#232323;">
+    {{PARRAFOS}}
+  </td></tr>
+
+  <!-- Temas -->
+  <tr><td class="px" style="padding:36px 40px 0 40px;">
+    <p class="tx" style="margin:0 0 18px 0;font-family:'Karla',Arial,sans-serif;font-size:16px;line-height:22px;font-weight:700;color:#232323;">{{INTRO_TEMAS}}</p>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      {{TEMAS}}
+    </table>
+  </td></tr>
+
+  <!-- Firma -->
+  <tr><td class="px tx" style="padding:14px 40px 0 40px;font-family:'Karla',Arial,sans-serif;font-size:17px;line-height:28px;font-weight:400;color:#232323;">
+    Un abrazo,<br>
+    <span class="tx" style="white-space:nowrap;font-weight:700;">Lavin&nbsp;🌋</span>
+  </td></tr>
+
+  <!-- Botón principal: YouTube -->
+  <tr><td class="px" align="center" style="padding:36px 40px 0 40px;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+      <tr><td class="bt" align="center" bgcolor="#232323" style="border-radius:10px;">
+        <a class="btn bta" href="{{URL_YOUTUBE}}" target="_blank" style="display:block;padding:15px 24px;font-family:'Karla',Arial,sans-serif;font-size:17px;line-height:24px;font-weight:700;color:#ffffff;text-decoration:none;border-radius:10px;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/120px-YouTube_full-color_icon_%282017%29.svg.png" width="29" height="20" alt="YouTube" style="display:inline-block;vertical-align:middle;border:0;margin-right:10px;"><span style="vertical-align:middle;color:#ffffff;">Mira el episodio en YouTube</span>
+        </a>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <!-- Otras plataformas -->
+  <tr><td class="px" style="padding:40px 40px 44px 40px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr><td bgcolor="#d54b4d" style="background:#d54b4d;border-radius:12px;padding:28px 28px 24px 28px;">
+        <p style="margin:0 0 6px 0;font-family:'Outfit',Arial,sans-serif;font-size:22px;line-height:28px;font-weight:600;color:#ffffff;">¿O prefieres escucharlo en otro lado?</p>
+        <p style="margin:0 0 20px 0;font-family:'Karla',Arial,sans-serif;font-size:16px;line-height:24px;font-weight:400;color:#ffffff;">Está en tu plataforma de podcasts favorita.</p>
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td class="pill-td" width="33%" style="padding-right:6px;">
+              <a class="pill" href="{{URL_SPOTIFY}}" target="_blank" style="display:block;text-align:center;padding:11px 6px;border:1px solid #ffffff;border-radius:100px;font-family:'Karla',Arial,sans-serif;font-size:15px;line-height:18px;font-weight:500;color:#ffffff;text-decoration:none;">Spotify</a>
+            </td>
+            <td class="pill-td" width="34%" style="padding:0 3px;">
+              <a class="pill" href="{{URL_APPLE}}" target="_blank" style="display:block;text-align:center;padding:11px 6px;border:1px solid #ffffff;border-radius:100px;font-family:'Karla',Arial,sans-serif;font-size:15px;line-height:18px;font-weight:500;color:#ffffff;text-decoration:none;">Apple Podcasts</a>
+            </td>
+            <td class="pill-td" width="33%" style="padding-left:6px;">
+              <a class="pill" href="{{URL_AMAZON}}" target="_blank" style="display:block;text-align:center;padding:11px 6px;border:1px solid #ffffff;border-radius:100px;font-family:'Karla',Arial,sans-serif;font-size:15px;line-height:18px;font-weight:500;color:#ffffff;text-decoration:none;">Amazon Music</a>
+            </td>
+          </tr>
+        </table>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <!-- Pie -->
+  <tr><td class="px ft" style="padding:24px 40px 8px 40px;border-top:1px solid #e3e3e3;font-family:'Karla',Arial,sans-serif;font-size:13px;line-height:20px;color:#8a8a8a;text-align:center;">
+    Bolkana · C/Guifre el Pelos 42, 2-3, 08840 Viladecans<br>
+    Has recibido este email porque estás suscrito a la newsletter de Bolkana ({{ contact.EMAIL }}).<br>
+    <a href="{{ unsubscribe }}" target="_blank" style="color:#8a8a8a;text-decoration:underline;">Darse de baja</a>
+  </td></tr>
+
+</table>
+
+</td></tr>
+</table>
+</body>
+</html>
