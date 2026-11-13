@@ -23,11 +23,13 @@ Archivos de la skill:
 
 ## Reglas (aprendidas en el #17; no saltárselas)
 
-1. **Un clip por día, el mismo día en los tres canales**, en el orden de los números de clip. Se empieza **el día siguiente**:
-   nunca se programa nada para hoy. Si ya hay clips programados, se empieza el día después del último.
+1. **Un clip por día, el mismo día en los tres canales**, en el orden de los números de clip. Si ya hay clips programados,
+   se empieza el día después del último; si no, el primer día con huecos libres (puede ser hoy si aún no han pasado las
+   horas de los tres canales). Si el usuario pide otro día de inicio (en el #17 se empezó al día siguiente porque el
+   episodio aún no estaba publicado), se usa ese.
 2. Cada post sale a **la hora del horario de Buffer de ese canal para ese día de la semana**, y siempre con
    **hora fija (`customScheduled`)**. No se usa `addToQueue`: Buffer recoloca los posts de la cola cada vez que cambia otro
-   post, y en el #17 eso movió un clip a «hoy».
+   post, y en el #17 eso movió un clip a un día que no tocaba.
 3. **Texto:** el bloque «Reels / TikTok / YouTube Shorts» de la ficha, igual en los 3 canales. **Título** de YouTube y
    TikTok: el encabezado de la ficha (`# Clip NN · <título>`), como máximo 100 caracteres.
 4. **Portada en el segundo 2** (`thumbnailOffset: 2000`) en los 3 canales.
@@ -64,8 +66,8 @@ Guarda el resultado tal cual en el scratchpad como `horario.json`.
 python3 .claude/skills/bolkana-buffer/preparar.py "episodios/<NN | Invitado>" "<url carpeta Drive>" <scratchpad>/horario.json \
   --desde AAAA-MM-DD --clips 01-10 --colaborador <usuario_ig> --salida <scratchpad>/buffer_plan.json
 ```
-El script falla si un enlace de Drive no devuelve un vídeo, si una ficha no tiene el bloque de Reels, si `--desde` es hoy
-o anterior, o si un canal pasaría de 10 posts. Imprime la tabla del calendario: revísala (orden, días, horas en hora de
+El script falla si un enlace de Drive no devuelve un vídeo, si una ficha no tiene el bloque de Reels, si alguna hora ya
+ha pasado, o si un canal pasaría de 10 posts. Imprime la tabla del calendario: revísala (orden, días, horas en hora de
 Madrid; el script ya tiene en cuenta el cambio de hora).
 
 ### 4. Crear los posts
@@ -73,10 +75,12 @@ Para cada canal (`instagram`, `tiktok`, `youtube`), una llamada a `mcp__buffer__
 `lotes.<canal>.mutation` y `lotes.<canal>.variables` de `buffer_plan.json`. Los Reels **tienen que ir por
 `execute_mutation`**: `collaborators` no está en el esquema público ni en `create_post`, pero Buffer lo acepta así
 (comprobado en el #17). Por la API no se puede leer de vuelta: pide al usuario que confirme en Buffer que aparece en el
-primer Reel.
+primer Reel. Si el servidor responde «Tool execute_mutation not found» (pasó el 30-10-2026, incluso tras reconectar
+Buffer), TikTok y YouTube se crean con `create_post`, y los Reels se crean con `create_post` sin colaborador solo si el
+usuario lo acepta; entonces él añade el colaborador a mano en Buffer.
 
 ### 5. Comprobar
-Repite la consulta del paso 1: los 3 posts de cada clip tienen que estar el mismo día, ninguno hoy, todos con
+Repite la consulta del paso 1: los 3 posts de cada clip tienen que estar el mismo día, todos con
 `isCustomScheduled: true`, `thumbnailOffset: 2000` y en `durationMs` la duración real del clip (señal de que Buffer leyó
 el vídeo de Drive; pide `video { thumbnailOffset durationMs }` en la consulta).
 Dale al usuario la tabla final (día · IG · TikTok · YouTube, en hora de Madrid) y el texto de LinkedIn de cada clip.

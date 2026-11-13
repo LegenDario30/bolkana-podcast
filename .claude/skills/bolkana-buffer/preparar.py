@@ -77,8 +77,8 @@ def main():
     ap.add_argument("episodio")
     ap.add_argument("drive")
     ap.add_argument("horario")
-    ap.add_argument("--desde", required=True, help="primer día (YYYY-MM-DD); nunca hoy")
-    ap.add_argument("--clips", help="rango NN-MM o lista NN,MM (por defecto todos los que tengan vídeo y ficha)")
+    ap.add_argument("--desde", required=True, help="primer día (YYYY-MM-DD)")
+    ap.add_argument("--clips", help="rango NN-MM o lista NN,MM en el orden de publicación (por defecto todos)")
     ap.add_argument("--colaborador", help="usuario de IG de la empresa del invitado, sin @")
     ap.add_argument("--salida", default="buffer_plan.json")
     a = ap.parse_args()
@@ -93,17 +93,19 @@ def main():
     if a.clips:
         if "-" in a.clips:
             i, j = (int(x) for x in a.clips.split("-"))
-            quiero = set(range(i, j + 1))
+            quiero = list(range(i, j + 1))
         else:
-            quiero = {int(x) for x in a.clips.split(",")}
-        claves = [k for k in claves if int(k.split("_")[1]) in quiero]
+            quiero = [int(x) for x in a.clips.split(",")]  # una lista respeta el orden dado
+        por_num = {int(k.split("_")[1]): k for k in claves}
+        falta = [n for n in quiero if n not in por_num]
+        if falta:
+            sys.exit(f"Sin vídeo en Drive o sin ficha: clip(s) {falta}")
+        claves = [por_num[n] for n in quiero]
     if not claves:
         sys.exit("No hay clips que programar")
 
-    hoy = datetime.now(TZ).date()
+    ahora = datetime.now(TZ)
     d0 = date.fromisoformat(a.desde)
-    if d0 <= hoy:
-        sys.exit(f"--desde tiene que ser posterior a hoy ({hoy})")
     hor = horario(a.horario)
     num = re.match(r"(\d+)", ep.name)
     num = num.group(1) if num else "?"
@@ -123,7 +125,10 @@ def main():
             if not slots:
                 sys.exit(f"{svc} no tiene hueco el {DIAS[dia.weekday()]}: revisa el horario en Buffer")
             hh, mm = map(int, slots[0].split(":"))
-            due = datetime(dia.year, dia.month, dia.day, hh, mm, tzinfo=TZ).isoformat()
+            due = datetime(dia.year, dia.month, dia.day, hh, mm, tzinfo=TZ)
+            if due <= ahora:
+                sys.exit(f"{k}: la hora de {svc} ({due:%d-%m %H:%M}) ya ha pasado; empieza otro día con --desde")
+            due = due.isoformat()
             asset = [{"video": {"url": url, "metadata": {"title": f"#{num} | {k}.mp4", "thumbnailOffset": 2000}}}]
             meta = {
                 "instagram": {"instagram": {"type": "reel", "shouldShareToFeed": True,
